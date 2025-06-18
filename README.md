@@ -1,1 +1,0 @@
-# Educesol-parent-web
