@@ -3,7 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <title>Educesol Login</title>
-    <link rel="stylesheet" href="loginpage/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(180deg, #0E0D38 0%, #3E6A11 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        .login-container {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(44, 62, 80, 0.2);
+            padding: 40px 32px 32px 32px;
+            width: 420px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .logo {
+            width: 98px;
+            height: 87px;
+            margin-bottom: 16px;
+            }
+        .login-title {
+            color: #66CC00;
+            font-size: 40px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            text-align: left;
+            width: 100%;
+        }
+        .login-subtitle {
+            color: #0E0D38;
+            font-size: 18px;
+            margin-bottom: 24px;
+            text-align: left;
+            width: 100%;
+        }
+        /* Floating label group */
+        .floating-label-group {
+            position: relative;
+            width: 360px;
+            margin-bottom: 24px;
+        }
+        .input-border {
+            display: flex;
+            align-items: center;
+            border: 2px solid #66CC00;
+            border-radius: 10px;
+            background: #fff;
+            height: 64px;
+            position: relative;
+            box-sizing: border-box;
+             }
+        .input-icon {
+            margin-left: 16px;
+            margin-right: 8px;
+            color: #7F827C73;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .floating-label-group input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 1.2rem;
+            color: #0E0D38;
+            flex: 1;
+            height: 100%;
+            padding: 0 12px;
+            padding-left: 0;
+            margin-left: 0;
+            margin-right: 0;
+            z-index: 2;
+        }
+        .floating-label-group label {
+            position: absolute;
+            left: 72px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7F827C73;
+            font-size: 1.0rem;
+            background: #fff;
+            padding: 0 8px;
+            pointer-events: none;
+            transition: 0.2s ease all;
+            z-index: 3;
+        }
+        .floating-label-group input:focus + label,
+        .floating-label-group input:not(:placeholder-shown) + label {
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.71rem;
+            color: #3E6A11;
+            background: #fff;
+            padding: 0 12px;
+        }
+        .floating-label-group input:focus + label::before,
+        .floating-label-group input:not(:placeholder-shown) + label::before,
+        .floating-label-group input:focus + label::after,
+        .floating-label-group input:not(:placeholder-shown) + label::after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 50%;
+            width: 80px;
+            height: 2px;
+            background: #66CC00;
+            z-index: -1;
+             }
+        .floating-label-group input:focus + label::before,
+        .floating-label-group input:not(:placeholder-shown) + label::before {
+            left: -90px;
+            transform: translateY(-50%);
+        }
+        .floating-label-group input:focus + label::after,
+        .floating-label-group input:not(:placeholder-shown) + label::after {
+            right: -90px;
+            transform: translateY(-50%);
+        }
+        /* Password group */
+        .password-group {
+            position: relative;
+            margin-bottom: 24px;
+            width: 360px;
+        }
+        .password-group input[type="password"],
+        .password-group input[type="text"] {
+            width: 100%;
+            padding: 0 12px;
+            font-size: 1.2rem;
+            border: 1px solid #7F827C73;
+            border-radius: 10px;
+            outline: none;
+            background: #F8F8F8;
+            color: #0E0D38;
+            height: 64px;
+            box-sizing: border-box;
+             }
+        .password-group input::placeholder {
+            color: #7F827C73;
+            opacity: 1;
+        }
+        .show-password {
+            position: absolute;
+            right: 24px;
+            top: 20px;
+            color: #66CC00;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1rem;
+            user-select: none;
+        }
+        .login-btn {
+            width: 191px;
+            background: #0E0D38;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 18px 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+            letter-spacing: 1px;
+        }
+        .login-btn:hover {
+            background: #66CC00;
+            color: #fff;
+            }
+        .forgot-password {
+            margin-top: 18px;
+            font-size: 1rem;
+            color: #0E0D38;
+        }
+        .forgot-password a {
+            color: #0E0D38;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 16px;
+        }
+        input:-webkit-autofill,
+        input:-webkit-autofill:focus {
+            -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+            box-shadow: 0 0 0 1000px #fff inset !important;
+            -webkit-text-fill-color: #0E0D38 !important;
+        }
+    </style>
 </head>
 <body>
     <div class="login-container">
@@ -11,36 +206,37 @@
         <h1 class="login-title">Login</h1>
         <p class="login-subtitle">To stay connected with us</p>
         <form>
-            <div id="phone-input"></div>
-            <div class="input-group">
-                <input type="text" id="phone" placeholder="Phone number / Username">
+            <div class="floating-label-group">
+                <div class="input-border">
+                    <span class="input-icon">
+                        <svg width="32" height="32" fill="#7F827C73" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
+                    </span>
+                    <input type="text" id="username" placeholder=" " required>
+                    <label for="username">Phone number / Username</label>
+                </div>
             </div>
-            <div id="password-input"></div>
+            <div class="password-group">
+                <input type="password" id="password" placeholder="Password" required>
+                <span class="show-password" onclick="togglePassword()">Show</span>
+            </div>
             <button type="submit" class="login-btn">LOG IN</button>
+            <div class="forgot-password">
+                <a href="#">Forgot password ?</a>
+            </div>
         </form>
-        <div class="forgot-password">
-            <a href="#">Forgot password ?</a>
-        </div>
     </div>
     <script>
-        fetch('loginpage/phoneinput-index.html')
-            .then(res => res.text())
-            .then(html => document.getElementById('phone-input').innerHTML = html);
-        fetch('loginpage/password-input-index.html')
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById('password-input').innerHTML = html;
-                document.querySelector('.show-password').onclick = function() {
-                    const pwd = document.getElementById('password');
-                    if (pwd.type === 'password') {
-                        pwd.type = 'text';
-                        this.textContent = 'Hide';
-                    } else {
-                        pwd.type = 'password';
-                        this.textContent = 'Show';
-                    }
-                };
-            });
+        // Simple show/hide password functionality
+        function togglePassword() {
+            const pwdInput = document.getElementById('password');const showBtn = document.querySelector('.show-password');
+            if (pwdInput.type === 'password') {
+                pwdInput.type = 'text';
+                showBtn.textContent = 'Hide';
+            } else {
+                pwdInput.type = 'password';
+                showBtn.textContent = 'Show';
+            }
+        }
     </script>
-    </body>
+</body>
 </html>
