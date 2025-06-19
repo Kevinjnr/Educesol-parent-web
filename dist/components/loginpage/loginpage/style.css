@@ -84,9 +84,6 @@ body {
     background: #fff;
     margin-bottom: 18px;
 
-    form input:hover {
-        border:2px solid #66CC00;
-    }
 }
 
 .input-icon {
