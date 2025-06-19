@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Educesol Login</title>
+    <link rel="stylesheet" href="loginpage/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <img src="Logo_-_1_1.png" alt="Educesol Logo" class="logo">
+        <h1 class="login-title">Login</h1>
+        <p class="login-subtitle">To stay connected with us</p>
+        <form>
+            <div id="phone-input"></div>
+            <div id="password-input"></div>
+            <button type="submit" class="login-btn">LOG IN</button>
+        </form>
+        <div class="forgot-password">
+            <a href="#">Forgot password ?</a>
+        </div>
+    </div>
+    <script>
+        fetch('loginpage/phoneinput-index.html')
+            .then(res => res.text())
+            .then(html => document.getElementById('phone-input').innerHTML = html);
+        fetch('loginpage/password-input-index.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('password-input').innerHTML = html;
+                document.querySelector('.show-password').onclick = function() {
+                    const pwd = document.getElementById('password');
+                    if (pwd.type === 'password') {
+                        pwd.type = 'text';
+                        this.textContent = 'Hide';
+                    } else {
+                        pwd.type = 'password';
+                        this.textContent = 'Show';
+                    }
+                };
+            });
+    </script>
+    </body>
+</html>
