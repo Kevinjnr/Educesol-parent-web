@@ -63,7 +63,7 @@
         .input-icon {
             margin-left: 16px;
             margin-right: 8px;
-            color: #7F827C73;
+            color: whitesmoke;
             width: 32px;
             height: 32px;
             display: flex;
@@ -107,10 +107,9 @@
             background: #fff;
             padding: 0 12px;
         }
-        .floating-label-group input:focus + label::before,
-        .floating-label-group input:not(:placeholder-shown) + label::before,
-        .floating-label-group input:focus + label::after,
-        .floating-label-group input:not(:placeholder-shown) + label::after {
+
+        .floating-label-group input:(:placeholder-shown) + label::before,
+        .floating-label-group input:(:placeholder-shown) + label::after {
             content: "";
             display: block;
             position: absolute;
@@ -119,14 +118,14 @@
             height: 2px;
             background: #66CC00;
             z-index: -1;
-             }
-        .floating-label-group input:focus + label::before,
-        .floating-label-group input:not(:placeholder-shown) + label::before {
+        }
+
+        .floating-label-group input:(:placeholder-shown) + label::before {
             left: -90px;
             transform: translateY(-50%);
         }
-        .floating-label-group input:focus + label::after,
-        .floating-label-group input:not(:placeholder-shown) + label::after {
+        
+        .floating-label-group input:(:placeholder-shown) + label::after {
             right: -90px;
             transform: translateY(-50%);
         }
@@ -141,7 +140,7 @@
             width: 100%;
             padding: 0 12px;
             font-size: 1.2rem;
-            border: 1px solid #7F827C73;
+            border: 2px solid  #66CC00;
             border-radius: 10px;
             outline: none;
             background: #F8F8F8;
@@ -181,7 +180,7 @@
             background: #66CC00;
             color: #fff;
             }
-        .forgot-password {
+        .forgot-password {.
             margin-top: 18px;
             font-size: 1rem;
             color: #0E0D38;
@@ -219,7 +218,7 @@
                 <input type="password" id="password" placeholder="Password" required>
                 <span class="show-password" onclick="togglePassword()">Show</span>
             </div>
-            <button type="submit" class="login-btn">LOG IN</button>
+            <button type="submit" class="login-btn">LOG  IN</button>
             <div class="forgot-password">
                 <a href="#">Forgot password ?</a>
             </div>
