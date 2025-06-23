@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assignment Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark-green: #1AA939;
+      --light-green: #49DF6A;
+      --white: #FFFFFF;
+      --gray: #f5f5f5;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: var(--white);
+      padding: 0;
+      margin: 0;
+    }
+
+    header {
+      background-color: var(--dark-green);
+      color: var(--white);
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .header-left img {
+      width: 30px;
+      height: 30px;
+    }
+
+    .dropdown-menu {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 120px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      padding: 10px;
+      display: block;
+      color: black;
+      text-decoration: none;
+    }
+
+    .dropdown-menu:hover .dropdown-content {
+      display: block;
+    }
+
+    header input[type="text"] {
+      padding-left: 30px;
+      background: url('./folder/search-icon.png') no-repeat left center;
+      background-size: 20px;
+      height: 35px;
+      border-radius: 5px;
+      border: 1px solid black;
+    }
+
+    .assignment-section {
+      padding: 20px;
+    }
+
+    .assignment-section h2 {
+      margin-bottom: 15px;
+      color: var(--dark-green);
+    }
+
+    .search-class {
+      display: flex;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+
+    .search-class input {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .search-class button {
+      background-color: var(--dark-green);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .controls-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .control-box {
+      background-color: var(--light-green);
+      color: var(--white);
+      font-weight: bold;
+      padding: 15px 20px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .control-box img {
+      width: 25px;
+      height: 25px;
+    }
+
+    .control-box.dark {
+      background-color: #2f2c5c;
+    }
+
+    .control-box.create {
+      background-color: var(--white);
+      color: var(--dark-green);
+      border: 2px solid var(--dark-green);
+      cursor: pointer;
+    }
+    #addTeacherModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    #addTeacherModal .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 70%;
+      max-width: 900px;
+      height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    #addTeacherModal .header-section {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    #addTeacherModal .header-section h2 {
+      color: var(--dark-green);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    #addTeacherModal .profile-pic {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #addTeacherModal .profile-pic img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #ccc;
+    }
+
+    #addTeacherModal form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 20px;
+      font-size: 14px;
+    }
+
+    #addTeacherModal form label {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #addTeacherModal form input[type="text"],
+    #addTeacherModal form input[type="file"] {
+      padding: 6px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #addTeacherModal .footer-buttons {
+      margin-top: auto;
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+    }
+
+    #addTeacherModal .footer-buttons button {
+      padding: 8px 16px;
+      background-color: var(--dark-green);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    #addTeacherModal .file-upload {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #addTeacherModal .file-upload label {
+      cursor: pointer;
+      background: #f5f5f5;
+      padding: 8px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+    }
+
+    #addTeacherModal .file-upload input[type="file"] {
+      display: none;
+    }
+
+    .student-input {
+      margin: 20px 0;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .student-input input {
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      width: 300px;
+    }
+
+    .day-section {
+      margin-top: 30px;
+    }
+
+    .day-section h3 {
+      margin-bottom: 10px;
+    }
+
+    .assignments-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .assignment-card {
+      background-color: var(--gray);
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .assignment-card .info {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    .assignment-card .info img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .assignment-card .status {
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 5px;
+      align-self: flex-end;
+    }
+
+    .submitted {
+      background-color: var(--light-green);
+      color: var(--white);
+    }
+
+    .not-submitted {
+      background-color: red;
+      color: var(--white);
+    }
+
+    #addTeacherModal form label,
+    #editAssignmentModal form label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    #addTeacherModal input,
+    #editAssignmentModal input,
+    #editAssignmentModal select {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <img src="Desktop/Logo---white 1.png" alt="logo" />
+      <h1>Educesol</h1>
+      <div class="dropdown-menu">
+        <button>Menu ▾</button>
+        <div class="dropdown-content">
+          <a href="#">Profile</a>
+          <a href="#">Settings</a>
+          <a href="#">Logout</a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <input type="text" placeholder="Search" />
+      <span>🔊</span>
+      <span>👤</span>
+    </div>
+  </header>
+
+  <section class="assignment-section">
+    <h2>ASSIGNMENT</h2>
+
+    <div class="search-class">
+      <input type="text" placeholder="Search class" />
+      <button>SS 1 {SS1A}</button>
+    </div>
+
+    <div class="controls-row">
+      <div class="control-box create">+ CREATE</div>
+      <div class="control-box edit-assignment">
+        <img src="Desktop/contract_232501 2.png" alt="total" />
+        26 Total Assignments
+      </div>
+      <div class="control-box dark">
+        <img src="Desktop/contract_232501 2.png" alt="done" />
+        21 Assignment Done
+      </div>
+    </div>
+
+ <!-- ADD TEACHER MODAL -->
+<div id="addTeacherModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:10;">
+  <div style="background:white; padding:20px; border-radius:10px; width:70%; max-width:600px; max-height:90vh; overflow-y:auto;">
+    <h2 style="color:#1AA939;">ADD TEACHER PROFILE INFORMATION</h2>
+
+    <!-- 👇 Picture Section -->
+    <div style="text-align:center; margin-bottom:20px;">
+      <img src="https://via.placeholder.com/150" alt="Teacher Avatar" style="width:150px; height:150px; border-radius:50%; border:3px solid #1AA939;" />
+      <p style="color:gray; font-size:14px;">Teacher Profile Picture</p>
+    </div>
+
+    <form style="display:flex; flex-direction:column; gap:15px;">
+      <label>Bio
+        <input type="text" />
+      </label>
+      <label>Full Name
+        <input type="text" />
+      </label>
+      <label>Department
+        <input type="text" />
+      </label>
+      <label>Class
+        <input type="text" />
+      </label>
+      <label>Subject Case
+        <input type="text" />
+      </label>
+      <label>Extra Position
+        <input type="text" />
+      </label>
+      <label>Degree
+        <input type="text" />
+      </label>
+      <label>Phone Number
+        <input type="text" />
+      </label>
+
+      <label>Portfolio
+        <div style="display:flex; gap:10px; margin-top:5px;">
+          <input type="text" placeholder="Link or description..." style="flex:1; padding:6px; border:1px solid #ccc; border-radius:5px;" />
+          <label style="cursor:pointer; background:#f5f5f5; padding:8px; border-radius:5px; display:flex; align-items:center; gap:5px; font-size:14px; border:1px solid #ccc;">
+            <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" width="20" /> Add file
+            <input type="file" style="display:none;" />
+          </label>
+        </div>
+      </label>
+
+      <div style="display:flex; justify-content:flex-end; gap:10px;">
+        <button type="button" onclick="closeTeacherModal()" style="padding:8px 16px; background-color:#ccc; color:black; border:none; border-radius:5px; font-weight:600; cursor:pointer;">Cancel</button>
+        <button type="submit" style="padding:8px 16px; background-color:#1AA939; color:white; border:none; border-radius:5px; font-weight:600; cursor:pointer;">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+    <div class="student-input">
+      <input type="text" placeholder="Enter Student ID" />
+      <input type="text" value="Damilare Kayode Gabriel" />
+    </div>
+
+    <div class="day-section">
+      <h3>Yesterday</h3>
+      <div class="assignments-grid">
+        <div class="assignment-card">
+          <div class="info">
+            <img src="Desktop/Math logo.png" alt="math" />
+            <div>
+              <strong>MATHEMATICS</strong>
+              <p>Quadratic equations and expressions</p>
+            </div>
+          </div>
+          <div class="status not-submitted">NOT SUBMITTED</div>
+        </div>
+
+        <div class="assignment-card">
+          <div class="info">
+            <img src="Desktop/Frame 5.png" alt="finearts" />
+            <div>
+              <strong>FINE ARTS</strong>
+              <p>Sketching and drawing</p>
+            </div>
+          </div>
+          <div class="status submitted">SUBMITTED</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-section">
+      <h3>Monday</h3>
+      <div class="assignments-grid">
+        <div class="assignment-card">
+          <div class="info">
+            <img src="Desktop/mus.png" alt="music" />
+            <div>
+              <strong>MUSIC</strong>
+              <p>Understanding key notes</p>
+            </div>
+          </div>
+          <div class="status submitted">SUBMITTED</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-section">
+      <h3>June 15</h3>
+      <div class="assignments-grid">
+        <div class="assignment-card">
+          <div class="info">
+            <img src="Desktop/Physics.png" alt="physics" />
+            <div>
+              <strong>PHYSICS</strong>
+              <p>Simple harmonic motion</p>
+            </div>
+          </div>
+          <div class="status not-submitted">NOT SUBMITTED</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="addTeacherModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:10;">
+    <div style="background:white; padding:20px; border-radius:10px; width:500px;">
+      <h2 style="color:#1AA939;">ADD TEACHER PROFILE INFORMATION</h2>
+      <form>
+        <label>Bio <input type="text" /></label><br/><br/>
+        <label>Full Name <input type="text" /></label><br/><br/>
+        <label>Department <input type="text" /></label><br/><br/>
+        <label>Class <input type="text" /></label><br/><br/>
+        <label>Subject Case <input type="text" /></label><br/><br/>
+        <label>Extra Position <input type="text" /></label><br/><br/>
+        <label>Degree <input type="text" /></label><br/><br/>
+        <label>Phone Number <input type="text" /></label><br/><br/>
+        <label>Portfolio <input type="file" /></label><br/><br/>
+        <button type="button" onclick="closeTeacherModal()">Cancel</button>
+        <button type="submit">Save</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="editAssignmentModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:10;">
+  <div style="background:white; padding:20px; border-radius:10px; width:70%; max-width:500px; max-height:90vh; overflow-y:auto;">
+    <h2 style="color:#1AA939; margin-bottom: 20px;">EDIT ASSIGNMENT</h2>
+    <form style="display: flex; flex-direction: column; gap: 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <label for="subject" style="flex: 1; font-weight: 600;">Select Subject</label>
+        <select id="subject" style="flex: 2; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+          <option>Mathematics</option>
+          <option>Fine Arts</option>
+          <option>Music</option>
+          <option>Physics</option>
+        </select>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <label for="topic" style="flex: 1; font-weight: 600;">Topic</label>
+        <input id="topic" type="text" value="Quadratic equation and expression" style="flex: 2; padding: 8px; border-radius: 5px; border: 1px solid #ccc;" />
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <label for="start-date" style="flex: 1; font-weight: 600;">Start Date</label>
+        <input id="start-date" type="date" style="flex: 2; padding: 8px; border-radius: 5px; border: 1px solid #ccc;" />
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <label for="due-date" style="flex: 1; font-weight: 600;">Due Date</label>
+        <input id="due-date" type="date" style="flex: 2; padding: 8px; border-radius: 5px; border: 1px solid #ccc;" />
+      </div>
+
+      <div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin-top: 20px; width: 100%;">
+        <button type="button" onclick="deleteAssignment()" style="padding: 10px 20px; background-color: #e74c3c; color: white; border: none; border-radius: 5px; font-weight: 600; cursor: pointer;">
+          Delete
+        </button>
+        <button type="submit" style="padding: 10px 20px; background-color: #27ae60; color: white; border: none; border-radius: 5px; font-weight: 600; cursor: pointer;">
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="confirmationModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:20;">
+  <div style="background:white; padding:30px; border-radius:10px; width:350px; text-align:center;">
+    <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Success" style="width:100px; margin-bottom:20px;" />
+    <p style="font-size:16px; margin-bottom:25px;">Assignment created successfully, click the button below to continue</p>
+    <button id="doneBtn" style="padding: 12px 30px; background-color: #27ae60; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
+      Done
+    </button>
+  </div>
+</div>
+
+
+    </form>
+  </div>
+</div>
+
+<div id="deleteConfirmModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:30;">
+    <div style="background:white; padding:30px; border-radius:10px; width:400px; text-align:center;">
+      <img src="https://cdn-icons-png.flaticon.com/512/1828/1828665.png" alt="Warning" style="width:100px; margin-bottom:20px;" />
+      <p style="font-size:16px; margin-bottom:25px;">You are about to delete an assignment, are you sure you want to?</p>
+      <div style="display:flex; justify-content:center; gap:20px;">
+        <button id="confirmDeleteBtn" style="padding: 10px 20px; background-color: #27ae60; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
+          Yes
+        </button>
+        <button id="closeDeleteModalBtn" style="padding: 10px 20px; background-color: #e74c3c; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.querySelector('.control-box.create').addEventListener('click', () => {
+      document.getElementById('addTeacherModal').style.display = 'flex';
+    });
+
+    function closeTeacherModal() {
+      document.getElementById('addTeacherModal').style.display = 'none';
+    }
+
+    document.querySelector('.control-box.edit-assignment').addEventListener('click', () => {
+      document.getElementById('editAssignmentModal').style.display = 'flex';
+    });
+
+    function closeEditModal() {
+      document.getElementById('editAssignmentModal').style.display = 'none';
+    }
+
+    document.querySelectorAll('.assignment-card .status').forEach(status => {
+      status.addEventListener('click', () => {
+        if (status.classList.contains('not-submitted')) {
+          status.classList.remove('not-submitted');
+          status.classList.add('submitted');
+          status.textContent = 'SUBMITTED';
+        } else {
+          status.classList.remove('submitted');
+          status.classList.add('not-submitted');
+          status.textContent = 'NOT SUBMITTED';
+        }
+      });
+    });
+
+    document.querySelector('#editAssignmentModal form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      closeEditModal();
+      document.getElementById('confirmationModal').style.display = 'flex';
+    });
+
+    document.getElementById('doneBtn').addEventListener('click', function() {
+      document.getElementById('confirmationModal').style.display = 'none';
+    });
+
+    function deleteAssignment() {
+      document.getElementById('deleteConfirmModal').style.display = 'flex';
+    }
+
+    document.getElementById('closeDeleteModalBtn').addEventListener('click', function () {
+      document.getElementById('deleteConfirmModal').style.display = 'none';
+    });
+
+    document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
+      alert('Assignment deleted.');
+      document.getElementById('deleteConfirmModal').style.display = 'none';
+      closeEditModal();
+    });
+  
+  </script>
+</body>
+</html>
+
