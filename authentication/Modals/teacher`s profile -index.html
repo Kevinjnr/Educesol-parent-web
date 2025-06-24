@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Educesol - Add Teacher Profile</title>
+  <style>
+    body {
+      background: #232326;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .navbar {
+      background: #2eb24c;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      color: #fff;
+    }
+    .navbar .logo {
+      font-weight: bold;
+      font-size: 20px;
+      margin-right: 24px;
+       }
+    .navbar .spacer {
+      flex: 1;
+    }
+    .navbar .icon {
+      margin-left: 16px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .container {
+      background: #fff;
+      width: 480px;
+      margin: 60px auto;
+      border-radius: 8px;
+      box-shadow: 0 0 16px rgba(0,0,0,0.1);
+      padding: 32px 32px 24px 32px;
+      position: relative;
+    }
+    .profile-pic-section {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .profile-pic {
+      width: 80px;
+       height: 80px;
+      border-radius: 50%;
+      background: #eaeaea;
+      display: inline-block;
+      position: relative;
+      vertical-align: middle;
+    }
+    .profile-pic .add-icon {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background: #2eb24c;
+      color: #fff;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      border: 2px solid #fff;
+    }
+    .profile-pic-label {
+      display: block;
+      margin-top: 8px;
+      color: #888;
+      font-size: 15px;
+    }
+    .form-title {
+      color: #2eb24c;
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+    .form-group {
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+    }
+    .form-group label {
+      color: #444;
+      font-size: 14px;
+      min-width: 130px;
+      font-weight: 500;
+      margin-bottom: 0;
+      text-align: left;
+    }
+    .form-group input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .form-group input[type="file"] {
+      padding: 0;
+    }
+    .portfolio-upload {
+         display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 16px;
+    }
+    .portfolio-upload img {
+      width: 36px;
+      height: 36px;
+    }
+    .save-btn {
+      background: #2eb24c;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 32px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      float: right;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <img src="Logo_-_1_1.png" alt="Educesol Logo" style="height:32px; margin-right:10px;">
+    <span class="logo">Educesol</span>
+    <span class="spacer"></span>
+    <span class="icon">&#128269;</span>
+    <span class="icon">&#128100;</span>
+    <span class="icon">&#9881;</span>
+  </div>
+  <div class="container">
+    <div class="form-title">ADD TEACHER PROFILE INFORMATION</div>
+    <div class="profile-pic-section">
+      <div class="profile-pic" style="position:relative;">
+        <span class="add-icon">+</span>
+        <svg width="56" height="70" fill="#7F827C73" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
+      </div>
+      <span class="profile-pic-label">Add profile Picture</span>
+    </div>
+    <form>
+      <div class="form-group">
+        <label for="bio">Bio</label>
+        <input type="text" id="bio">
+      </div>
+      <div class="form-group">
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname">
+      </div>
+      <div class="form-group">
+        <label for="department">Department</label>
+        <input type="text" id="department">
+      </div>
+      <div class="form-group">
+        <label for="class">Class</label>
+        <input type="text" id="class">
+        </div>
+      <div class="form-group">
+        <label for="subjectcase">Subject Case</label>
+        <input type="text" id="subjectcase">
+      </div>
+      <div class="form-group">
+        <label for="extraposition">Extra Position</label>
+        <input type="text" id="extraposition">
+      </div>
+      <div class="form-group">
+        <label for="degree1">Degree</label>
+        <input type="text" id="degree1">
+      </div>
+      <div class="form-group">
+        <label for="phonenumber">Phone number</label>
+        <input type="text" id="phonenumber">
+      </div>
+      <div class="form-group">
+        <label for="degree2">Degree</label>
+        <input type="text" id="degree2">
+      </div>
+      <div class="portfolio-upload">
+        <img src="https://img.icons8.com/color/48/000000/add-file.png" alt="Add file">
+        <label for="portfolio" style="flex:1;">Add file</label>
+        <input type="file" id="portfolio" style="flex:2;">
+           </div>
+      <button type="submit" class="save-btn">SAVE</button>
+    </form>
+  </div>
+</body>
+</html>

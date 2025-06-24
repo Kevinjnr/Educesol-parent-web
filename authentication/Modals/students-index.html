@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Educesol - Teachers List</title>
+  <style>
+    body {
+      background: #232326;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .navbar {
+      background: #2eb24c;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      color: #fff;
+    }
+    .navbar .logo {
+      font-weight: bold;
+      font-size: 22px;
+      margin-right: 24px;
+    }
+    .container {
+      background: #fff;
+      width: 900px;
+      margin: 40px auto;
+      border-radius: 8px;
+      box-shadow: 0 0 16px rgba(0,0,0,0.08);
+      padding: 32px 24px 24px 24px;
+      position: relative;
+    }
+    .header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .header-row h2 {
+      color: #2eb24c;
+      font-size: 22px;
+      font-weight: bold;
+      margin: 0;
+      letter-spacing: 1px;
+    }
+    .add-btn {
+      background: #2eb24c;
+      color: #fff;
+       border: none;
+      border-radius: 6px;
+      padding: 8px 18px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .category-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 22px;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 900px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 12px 0;
+      border: none;
+      background: #0e1b2b;
+      color: #fff;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      border-radius: 0;
+      outline: none;
+      letter-spacing: 1px;
+    }
+    .tab-btn.active {
+      background:#071331 ;
+      color: #fff;
+      border-radius: 8px 0 0 8px;
+    }
+    .tab-btn:nth-child(2).active {
+      border-radius: 0;
+    }
+    .tab-btn:last-child.active {
+      border-radius: 0 8px 8px 0;
+    }
+
+    .tab-btn:not(.active) {
+      background: #66cc00;
+      color: white;
+      margin-left: 5px;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+    .table-controls {
+       display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+    .table-controls label,
+    .table-controls input,
+    .table-controls select {
+      font-size: 14px;
+    }
+    .table-controls input[type="search"] {
+      padding: 6px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 180px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 12px;
+    }
+    th, td {
+      padding: 10px 8px;
+       text-align: left;
+      font-size: 15px;
+    }
+    th {
+      background: #f3f7f3;
+      color: #2eb24c;
+      font-weight: bold;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    tr {
+      border-bottom: 1px solid #f0f0f0;
+    }
+    tr:last-child {
+      border-bottom: none;
+    }
+    .profile-img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #2eb24c;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .action-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      margin: 0 4px;
+      color: #2eb24c;
+    }
+    .action-btn.delete {
+      color: #222;
+    }
+    .chat-icon {
+      width: 20px;
+      height: 20px;
+      vertical-align: middle;
+    }
+    .pagination-controls {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .pagination-btn {
+      background: #2eb24c;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 18px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .pagination-btn:hover {
+      background: #24963d;
+    }
+    .pagination-page {
+      display: inline-block;
+      min-width: 28px;
+      text-align: center;
+      padding: 6px 0;
+      font-size: 15px;
+      font-weight: bold;
+      color: #2eb24c;
+      border-radius: 4px;
+      background: #f3f7f3;
+      cursor: pointer;
+    }
+    .pagination-page.active {
+      background: #2eb24c;
+      color: #fff;
+      }
+    .entries-info {
+      font-size: 13px;
+      color: #444;
+      margin-top: 8px;
+    }
+    @media (max-width: 1000px) {
+      .container { width: 98vw; padding: 8px; }
+      table, th, td { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <img src="Logo_-_1_1.png" alt="Educesol Logo" style="height:32px; margin-right:10px;">
+    <span class="logo">Educesol</span>
+  </div>
+  <div class="container">
+    <div class="header-row">
+      <h2>TEACHERS</h2>
+      <button class="add-btn" onclick="window.location.href='teacher`s profile -index.html'">+ Add Teachers</button>
+    </div>
+     <div class="category-tabs">
+      <button class="tab-btn active">Science</button>
+      <button class="tab-btn" style="width: 100%;border-radius: 0;">Art</button>
+      <button class="tab-btn">Commercial</button>
+    </div>
+    <div class="table-controls">
+      <label>Show
+        <select>
+          <option>10</option>
+          <option>25</option>
+          <option>50</option>
+          <option>75</option>
+        </select>
+        Entries
+      </label>
+      <input type="search" placeholder="Search">
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Photo</th>
+          <th>About</th>
+          <th>Class</th>
+          <th>Subject</th>
+          <th>Chat</th>
+          <th>Edit Profile</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John Deo</td>
+          <td><img class="profile-img" src="https://randomuser.me/api/portraits/men/1.jpg" alt="John Deo"></td>
+          <td>View Profile</td>
+          <td>SS3A</td>
+          <td>Computer science</td>
+          <td><img class="chat-icon" src="chat_134935 4.png" alt="Chat"></td>
+          <td>
+            <button class="action-btn" title="Edit">
+              <img src="pen_12257288.png" alt="Edit" style="width:18px; height:18px;">
+            </button>
+          </td>
+          <td>
+            <button class="action-btn" title="Delete">
+              <img src="trash-bin_7259486.png" alt="Delete" style="width:18px; height:18px;">
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>Jenny William</td>
+          <td><img class="profile-img" src="https://randomuser.me/api/portraits/women/2.jpg" alt="Jenny William"></td>
+          <td>View Profile</td>
+          <td>SS2A</td>
+          <td>Biology</td>
+          <td><img class="chat-icon" src="chat_134935 4.png" alt="Chat"></td>
+          <td>
+            <button class="action-btn" title="Edit">
+              <img src="pen_12257288.png" alt="Edit" style="width:18px; height:18px;">
+            </button>
+          </td>
+          <td>
+            <button class="action-btn delete" title="Delete">
+              <img src="trash-bin_7259486.png" alt="Delete" style="width:18px; height:18px;">
+            </button>
+          </td>
+            </tr>
+        <tr>
+          <td>Lori Moore</td>
+          <td><img class="profile-img" src="https://randomuser.me/api/portraits/women/3.jpg" alt="Lori Moore"></td>
+          <td>View Profile</td>
+          <td>SS1C</td>
+          <td>Chemistry</td>
+          <td><img class="chat-icon" src="chat_134935 4.png" alt="Chat"></td>
+          <td>
+            <button class="action-btn" title="Edit">
+              <img src="pen_12257288.png" alt="Edit" style="width:18px; height:18px;">
+            </button>
+          </td>
+          <td>
+            <button class="action-btn delete" title="Delete">
+              <img src="trash-bin_7259486.png" alt="Delete" style="width:18px; height:18px;">
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>Austin Pena</td>
+          <td><img class="profile-img" src="https://randomuser.me/api/portraits/men/4.jpg" alt="Austin Pena"></td>
+          <td>View Profile</td>
+          <td>SS2d</td>
+          <td>Physics</td>
+          <td><img class="chat-icon" src="chat_134935 4.png" alt="Chat"></td>
+          <td>
+            <button class="action-btn" title="Edit">
+              <img src="pen_12257288.png" alt="Edit" style="width:18px; height:18px;">
+            </button>
+          </td>
+          <td>
+            <button class="action-btn delete" title="Delete">
+              <img src="trash-bin_7259486.png" alt="Delete" style="width:18px; height:18px;">
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="entries-info">
+      Showing 1 to 10 of 502 entries
+    </div>
+    <div class="pagination-controls">
+      <button class="pagination-btn">Previous</button>
+      <span class="pagination-page active">1</span>
+      <span class="pagination-page">2</span>
+      <button class="pagination-btn">Next</button>
+    </div>
+  </div>
+</body>
+</html>
