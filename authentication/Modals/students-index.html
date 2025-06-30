@@ -20,7 +20,7 @@
     .navbar .logo {
       font-weight: bold;
       font-size: 22px;
-       margin-right: 24px;
+      margin-right: 24px;
     }
     .container {
       background: #fff;
@@ -108,9 +108,36 @@
     .table-controls select {
       font-size: 14px;
     }
+    .table-controls label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: normal;
+      margin-bottom: 0;
+      margin-right: 0;
+    }
+    .table-controls select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 2px 10px;
+      font-size: 14px;
+      background: #fff;
+      margin: 0 4px;
+      width: 110px;
+      outline: none;
+      transition: border 0.2s;
+      box-sizing: border-box;
+    }
+    .table-controls select:focus {
+      border: 1.5px solid #2eb24c;
+    }
     .table-controls input[type="search"] {
       padding: 6px 10px;
-      margin-left: 650px;
+      margin-left: 490px;
       border: 1px solid #ccc;
       border-radius: 4px;
       width: 180px;
@@ -266,12 +293,13 @@
     @media (max-width: 1000px) {
       .container { width: 98vw; padding: 8px; }
        table, th, td { font-size: 13px; }
+      .table-controls select { width: 48px; }
     }
   </style>
 </head>
 <body>
   <div class="navbar">
-    <img src="Logo_-_1_1.png" alt="Educesol Logo" style="height:32px; margin-right:10px;">
+    <img src="Logo---white 1.png" alt="Educesol Logo" style="height:32px; margin-right:10px;">
     <span class="logo">Educesol</span>
   </div>
   <div class="container">
@@ -285,7 +313,8 @@
       <button class="tab-btn">Commercial</button>
     </div>
     <div class="table-controls">
-      <label>Show
+      <label>
+        Show
         <select>
            <option>10</option>
           <option>25</option>
@@ -312,7 +341,7 @@
        <tbody>
         <tr>
           <td>John Deo</td>
-          <td><img class="profile-img" src="https://randomuser.me/api/portraits/men/1.jpg" alt="John Deo"></td>
+          <td><img class="profile-img" src="profile avatar.png" alt="John Deo"></td>
           <td>View Profile</td>
           <td>SS3A</td>
           <td>Computer science</td>
@@ -330,7 +359,7 @@
         </tr>
         <tr>
           <td>Jenny William</td>
-          <td><img class="profile-img" src="https://randomuser.me/api/portraits/women/2.jpg" alt="Jenny William"></td>
+          <td><img class="profile-img" src="profile avatar.png" alt="Jenny William"></td>
           <td>View Profile</td>
            <td>SS2A</td>
           <td>Biology</td>
@@ -348,7 +377,7 @@
         </tr>
         <tr>
           <td>Lori Moore</td>
-          <td><img class="profile-img" src="https://randomuser.me/api/portraits/women/3.jpg" alt="Lori Moore"></td>
+          <td><img class="profile-img" src="profile avatar.png"alt="Lori Moore"></td>
           <td>View Profile</td>
           <td>SS1C</td>
           <td>Chemistry</td>
@@ -366,7 +395,7 @@
         </tr>
         <tr>
           <td>Austin Pena</td>
-          <td><img class="profile-img" src="https://randomuser.me/api/portraits/men/4.jpg" alt="Austin Pena"></td>
+          <td><img class="profile-img" src="profile avatar.png" alt="Austin Pena"></td>
           <td>View Profile</td>
           <td>SS2d</td>
           <td>Physics</td>
