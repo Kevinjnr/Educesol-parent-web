@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Educesol - Teachers List</title>
+  <title>Educesol - Students List</title>
   <style>
     body {
       background: #232326;
@@ -44,36 +44,23 @@
       margin: 0;
        letter-spacing: 1px;
     }
-   .add-btn {
+.add-btn {
   display: flex;
   align-items: center;
   gap: 10px;
   background: #fff;
-  border: 2px solid #2eb24c;
-  border-radius: 8px;
-  padding: 6px 18px 6px 10px;
+  padding: 6px 20px 6px 16px;
   cursor: pointer;
   transition: box-shadow 0.2s, border 0.2s;
   box-shadow: 0 2px 8px rgba(46,178,76,0.06);
+  border: 1px solid #fff;
+  border-radius: 8px;
 }
 .add-btn:hover {
   box-shadow: 0 4px 16px rgba(46,178,76,0.13);
-  border-color: #24963d;
+  border-color: white;
 }
-.add-icon {
-   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 6px;
-  width: 28px;
-  height: 28px;
-}
-.add-plus {
-  color: #2eb24c;
-  font-size: 28px;
-  font-weight: bold;
-  line-height: 1;
-}
+
 .add-text {
   color: #2eb24c;
   font-size: 20px;
@@ -160,7 +147,7 @@
     }
     .table-controls input[type="search"] {
       padding: 6px 10px;
-      margin-left: 490px;
+      margin-left: auto;
       border: 1px solid #ccc;
       border-radius: 4px;
       width: 180px;
@@ -327,19 +314,21 @@
   </div>
   <div class="container">
     <div class="header-row">
-      <h2>TEACHERS</h2>
-     <div class="add-btn" onclick="window.location.href='teacher\'s profile -index.html'">
+      <h2>STUDENTS</h2>
+       
+     <div class="add-btn" onclick="window.location.href='teachers-profile-index.html'">
+      <form action="Add profile -index.html" method="get" style="margin:0;">
+        <button type="submit" class="add-btn">
       <span class="add-icon">
-         <span class="add-plus">+</span>
-      </span>
-      <span class="add-text">Add Teachers</span>
-
-
+         </span>
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
         <rect width="28" height="28" rx="6" fill="#2eb24c"/>
         <path d="M14 8V20" stroke="white" stroke-width="2" stroke-linecap="round"/>
         <path d="M8 14H20" stroke="white" stroke-width="2" stroke-linecap="round"/>
-      </svg>
+      </svg> 
+      <span class="add-text">Add Teachers</span>
+      </button>
+      </form>
     </div>
     </div>
     <div class="category-tabs">
@@ -459,7 +448,7 @@
     </div>
   </div>
 
-  <!-- Delete Modal -->
+  
   <div id="deleteModal" class="modal-overlay" style="display:none;">
     <div class="modal-content">
       <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
