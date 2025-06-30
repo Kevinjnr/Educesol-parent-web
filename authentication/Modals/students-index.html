@@ -19,7 +19,7 @@
     }
     .navbar .logo {
       font-weight: bold;
-      font-size: 22px;
+      font-size: 32px;
       margin-right: 24px;
     }
     .container {
@@ -44,41 +44,64 @@
       margin: 0;
        letter-spacing: 1px;
     }
-    .add-btn {
-      background: #2eb24c;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 8px 18px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .category-tabs {
-      display: flex;
-      gap: 0;
-      margin-bottom: 22px;
-      margin-top: 10px;
-      width: 100%;
-      max-width: 900px;
+   .add-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 2px solid #2eb24c;
+  border-radius: 8px;
+  padding: 6px 18px 6px 10px;
+  cursor: pointer;
+  transition: box-shadow 0.2s, border 0.2s;
+  box-shadow: 0 2px 8px rgba(46,178,76,0.06);
+}
+.add-btn:hover {
+  box-shadow: 0 4px 16px rgba(46,178,76,0.13);
+  border-color: #24963d;
+}
+.add-icon {
+   display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 6px;
+  width: 28px;
+  height: 28px;
+}
+.add-plus {
+  color: #2eb24c;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 1;
+}
+.add-text {
+  color: #2eb24c;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.category-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 22px;
+  margin-top: 10px;
+  width: 100%;
+  max-width: 900px;
       }
-    .tab-btn {
-      flex: 1;
-      padding: 12px 0;
-      border: none;
-      background: #0e1b2b;
-      color: #fff;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-      border-radius: 0;
-      outline: none;
-      letter-spacing: 1px;
-    }
+.tab-btn {
+  flex: 1;
+  padding: 12px 0;
+  border: none;
+  background: #0e1b2b;
+  color: #fff;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  border-radius: 0;
+  outline: none;
+  letter-spacing: 1px;
+      }
     .tab-btn.active {
       background:#071331 ;
       color: #fff;
@@ -299,13 +322,25 @@
 </head>
 <body>
   <div class="navbar">
-    <img src="Logo---white 1.png" alt="Educesol Logo" style="height:32px; margin-right:10px;">
+    <img src="Logo---white 1.png" alt="Educesol Logo" style="height:56px; margin-right:10px;">
     <span class="logo">Educesol</span>
   </div>
   <div class="container">
     <div class="header-row">
       <h2>TEACHERS</h2>
-      <button class="add-btn" onclick="window.location.href='teacher`s profile -index.html'">+ Add Teachers</button>
+     <div class="add-btn" onclick="window.location.href='teacher\'s profile -index.html'">
+      <span class="add-icon">
+         <span class="add-plus">+</span>
+      </span>
+      <span class="add-text">Add Teachers</span>
+
+
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <rect width="28" height="28" rx="6" fill="#2eb24c"/>
+        <path d="M14 8V20" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <path d="M8 14H20" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
     </div>
     <div class="category-tabs">
       <button class="tab-btn active">Science</button>
