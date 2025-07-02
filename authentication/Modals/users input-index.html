@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educesol-Add Student</title>
+    <style>
+        body {
+            background:white;
+            margin:0;
+            font-family:Arial,sans-serif;
+        }
+        .navbar{
+            background: #2eb24c; 
+            height: 66px;
+            display: flex;
+            align-items: center;
+            padding: 0  24px;
+            color: white;
+        }
+        .navbar .logo{
+            font-weight: bold;
+            font-size: 28px;
+            margin-right: 24px;
+        }
+        .navbar .menu{
+            font-size: 28px;
+            margin-right: 16px;
+            cursor: pointer;
+        }
+        .navbar .searchbar {
+            margin-left: 30px;
+            flex:1
+        }
+        .navbar input[type="search"]{
+            paddding:6px 12px;
+            border-radius: 2px;
+            border: none;
+            margin-left: 600px;
+            width: 150px;
+        }
+        .navbar .lang{
+            margin-left: 24px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .navbar .icon-group {
+            margin-left: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        .navbar .icon-group img {
+            width: 22px;
+            height: 22px;
+            vertical-align: middle;
+        }
+        .navbar .user {
+            margin-left: 18px;
+            background: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;    
+            justify-content: center;
+            }
+        .container {
+            max-width: 1100px;
+            margin: 32px auto 0 auto;
+            padding: 0 16px;
+        }
+        
+        
+        .section-title {
+            color: #2eb24c;
+            font-weight: bold;
+            font-size: 24px;
+            margin-top: 24px;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+        
+        .form-card .form-header {
+            font-weight: bold;
+            font-size: 16px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+        }
+        .form-row {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+             color: #444;
+        }
+        .form-group input,
+        .form-group textarea {
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+            background: #f8fafc;
+            transition: border 0.2s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border: 1.5px solid #2eb24c;
+        }
+        .form-group textarea {
+            min-height: 70px;
+            resize: vertical;
+        }
+        .form-group .input-icon {
+             position: relative;
+        }
+        .form-group .input-icon input {
+            padding-right: 32px;
+        }
+        .form-group .input-icon img {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            opacity: 0.7;
+        }
+        .form-actions {
+            display: flex;
+            gap: 16px;
+            margin-top: 18px;
+        }
+        .btn-submit {
+            background: #2eb24c;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+             padding: 10px 32px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-submit:hover {
+            background: #24973d;
+        }
+        .btn-cancel {
+            background: #ff2e2e;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 32px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-cancel:hover {
+              background: #d92626;
+        }
+        @media (max-width: 900px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <img src="Logo---white 1.png" style="margin-right:8px;vertical-align:middle;">Educesol
+            
+        </div>
+        <div class="menu">&#9776;</div>
+        <div class="searchbar">
+            <input type="search" placeholder="Search">
+        </div>
+        <div class="lang">ENGLISH</div>
+        <div class="icon-group">
+            <img src="https://img.icons8.com/ios-filled/24/ffffff/sun--v1.png" alt="theme">
+            <img src="https://img.icons8.com/ios-filled/24/ffffff/appointment-reminders--v1.png" alt="notifications">
+        </div>
+        <div class="user">
+            <img src="https://img.icons8.com/ios-filled/24/2eb24c/user-male-circle.png" alt="user">
+        </div>
+    </div>
+    <div class="container">
+        <div class="section-title">USERS</div>
+        <div class="subtitle">ADD STUDENT</div>
+        <div class="form-card">
+            <div class="form-header">BASIC INFO</div>
+            <form>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" placeholder="Enter First Name">
+                    </div>
+                     <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" placeholder="Enter Last Name">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="Email">
+                    </div>
+                    <div class="form-group input-icon">
+                        <label>Registration Date</label>
+                       <input type="date" placeholder="Registration Date" id="registration-date">
+                        <img src="" onclick="document.getElementById('registration-date').focus();" style="cursor:pointer;">
+                    </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Roll No.</label>
+                        <input type="text" placeholder="Roll no.">
+                    </div>
+                    <div class="form-group">
+                         <label>Class</label>
+                        <input type="text" placeholder="Class">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <input type="text" placeholder="Gender">
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile No.</label>
+                        <input type="text" placeholder="Mobile No.">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Parent's Name</label>
+                        <input type="text" placeholder="Enter First Bank">
+                    </div>
+                    <div class="form-group">
+                        <label>Parent's Mobile Number</label>
+                         <input type="text" placeholder="Parent's Mobile Number">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group input-icon">
+                
+                    <label>Date of Birth</label>
+                    <input type="date" placeholder="Date of Birth">
+                    </div>
+                    <div class="form-group">
+                        <label>Blood Group</label>
+                        <input type="text" placeholder="Blood Group">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="flex:2;">
+                        <label>Address</label>
+                        <textarea placeholder="Address"></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">SUBMIT</button>
+                    <button type="button" class="btn-cancel">CANCEL</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+     <script> document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Form submitted!');
+            
+        });
+         document.querySelector('.btn-cancel').addEventListener('click', function() {
+            // Clear all input and textarea fields in the form
+            const form = this.closest('form');
+            form.reset();
+        });
+        </script>
+    
+</body>
+</html>
+    
+    
