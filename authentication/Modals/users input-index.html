@@ -19,9 +19,22 @@
             color: white;
         }
         .navbar .logo{
+             display: flex;
+             align-items: center;
             font-weight: bold;
             font-size: 28px;
             margin-right: 24px;
+        }
+        .navbar .logo-img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            margin-right: 8px;
+            vertical-align: middle;
+             }
+       .navbar .logo-text {
+           display: inline-block;
+           vertical-align: middle;
         }
         .navbar .menu{
             font-size: 28px;
@@ -33,6 +46,8 @@
             flex:1
         }
         .navbar input[type="search"]{
+            background: #006400 ;
+            color: white;
             paddding:6px 12px;
             border-radius: 2px;
             border: none;
@@ -186,12 +201,13 @@
 <body>
     <div class="navbar">
         <div class="logo">
-            <img src="Logo---white 1.png" style="margin-right:8px;vertical-align:middle;">Educesol
+            <img src="Logo---white 1.png" style="margin-right:8px;vertical-align:middle;">
+             <span class="logo-text">Educesol</span>
             
         </div>
         <div class="menu">&#9776;</div>
         <div class="searchbar">
-            <input type="search" placeholder="Search">
+            <input type="search" placeholder="Search" style="background: #006400;color: white;">
         </div>
         <div class="lang">ENGLISH</div>
         <div class="icon-group">
@@ -199,7 +215,7 @@
             <img src="https://img.icons8.com/ios-filled/24/ffffff/appointment-reminders--v1.png" alt="notifications">
         </div>
         <div class="user">
-            <img src="https://img.icons8.com/ios-filled/24/2eb24c/user-male-circle.png" alt="user">
+            <img src="https://img.icons8.com/ios-filled/24/2eb24c/user-male-circle.png" alt="user" style="background:#fff; border-radius:50%; margin-right:8px;">
         </div>
     </div>
     <div class="container">
