@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Academic Attendance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --dark-green: #1AA939;
+            --white: #FFFFFF;
+            --gray-bg: #F8F8F8;
+            --text-dark: #333;
+            --light-blue-bg: #E0F2F7;
+            --term-blue-1: #3b4d9e;
+            --term-blue-2: #1e90ff;
+            --header-dark-green: #1AA939;
+            --main-heading-dark-blue: #2c3e50;
+            --card-bg-blue: #3498db;
+            --card-text-light-blue: #ecf0f1;
+            --section-header-bg: #e0e7ff;
+            --table-header-bg: #a7d9f7;
+            --table-row-even: #f0f8ff;
+            --table-row-odd: #ffffff;
+            --button-blue: #3498db;
+            --profile-avatar-blue: #3498db;
+            --profile-border-color: #e2e8f0;
+            --attendance-present: #1AA939;
+            --attendance-absent: #E53E3E;
+            --attendance-default: #FFFFFF;
+            --attendance-border: #CBD5E0;
+        }
+
+        html {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+        @layer base {
+            body {
+                background-color: var(--light-blue-bg);
+                color: var(--text-dark);
+            }
+            header {
+                background-color: var(--header-dark-green);
+                color: var(--white);
+            }
+        }
+
+        .header-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-logo {
+            width: 80px;
+        }
+        .header-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        .header-dropdown {
+            position: relative;
+        }
+        .header-menu-icon {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+        }
+        .dropdown-content {
+            position: absolute;
+            top: 36px;
+            left: 0;
+            background-color: white;
+            min-width: 120px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            display: none;
+            z-index: 10;
+        }
+        .header-dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-item {
+            display: block;
+            padding: 8px 12px;
+            color: #4a5568;
+            font-size: 0.875rem;
+            text-decoration: none;
+        }
+        .dropdown-item:hover {
+            background-color: #f7fafc;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header-search-input {
+            height: 32px;
+            padding: 0 12px;
+            border-radius: 6px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 0.875rem;
+            outline: none;
+        }
+        .header-search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .header-icon {
+            width: 32px;
+            height: 32px;
+        }
+        .header-user-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 9999px;
+        }
+
+        .main-content {
+            max-width: 1152px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 32px 16px;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding: 16px 24px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        .nav-breadcrumbs {
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            color: #4a5568;
+            font-weight: 700;
+        }
+        .nav-breadcrumbs span {
+            margin: 0 8px;
+            color: #a0aec0;
+        }
+        .nav-term-btn {
+            background-color: var(--dark-green);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+
+        .attendance-section-title {
+            background-color: var(--term-blue-1);
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            padding: 16px;
+            border-radius: 12px 12px 0 0;
+            margin-bottom: 0;
+        }
+
+        .attendance-grid-container {
+            background-color: var(--white);
+            padding: 32px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            margin-bottom: 32px;
+        }
+
+        .attendance-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+            justify-items: center;
+        }
+
+        .attendance-box {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            border: 2px solid var(--attendance-border);
+            color: var(--text-dark);
+            background-color: var(--attendance-default);
+        }
+
+        .attendance-box.present {
+            background-color: var(--attendance-present);
+            color: var(--white);
+            border-color: var(--attendance-present);
+        }
+
+        .attendance-box.absent {
+            background-color: var(--attendance-absent);
+            color: var(--white);
+            border-color: var(--attendance-absent);
+        }
+
+        .attendance-summary-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--white);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .attendance-summary-text {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--main-heading-dark-blue);
+            flex-grow: 1;
+        }
+
+        .save-button {
+            background-color: var(--dark-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+        }
+        .save-button:hover {
+            background-color: #15803d;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="header-main">
+        <div class="header-left">
+            <img src="./Logo---white 1.png" class="header-logo" alt="Educesol Logo">
+            <h1 class="header-title">Educesol</h1>
+            <div class="header-dropdown group">
+                <img src="./More.png" class="header-menu-icon" alt="Menu Icon">
+                <div class="dropdown-content">
+                    <a href="#" class="dropdown-item">Profile</a>
+                    <a href="#" class="dropdown-item">Settings</a>
+                    <a href="#" class="dropdown-item">Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <input type="text" placeholder="Search" class="header-search-input">
+            <img src="4.png" alt="Icon" class="header-icon">
+            <img src="./44 2.png" alt="User" class="header-user-icon">
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="nav-bar">
+            <div class="nav-breadcrumbs">
+                <span>ACADEMIC SESSION (2022/2023)</span>
+                <span>▶</span>
+            </div>
+            <button class="nav-term-btn">1st Term</button>
+        </div>
+
+        <div class="attendance-section">
+            <h2 class="attendance-section-title">FIRST TERM ATTENDANCE</h2>
+            <div class="attendance-grid-container">
+                <div class="attendance-grid">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="attendance-summary-footer">
+            <p class="attendance-summary-text">Student Has Been Present For A Number Of <span id="presentDays">22</span> Days Over <span id="totalDays">90</span> Days</p>
+            <button class="save-button">SAVE</button>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const attendanceGrid = document.querySelector('.attendance-grid');
+            const totalDaysSpan = document.getElementById('totalDays');
+            const presentDaysSpan = document.getElementById('presentDays');
+            const saveButton = document.querySelector('.save-button');
+
+            const totalPossibleDays = 90;
+            let presentDays = 0;
+
+            const updatePresentDaysDisplay = () => {
+                presentDaysSpan.textContent = presentDays;
+            };
+
+            for (let i = 1; i <= totalPossibleDays; i++) {
+                const attendanceBox = document.createElement('div');
+                attendanceBox.classList.add('attendance-box');
+                attendanceBox.textContent = i;
+                attendanceBox.dataset.day = i;
+
+                if ((i >= 1 && i <= 5) || (i >= 7 && i <= 12) || i === 13 || i === 14 || i === 18 || i === 20 || (i >= 22 && i <= 26)) {
+                    attendanceBox.classList.add('present');
+                    presentDays++;
+                } else if (i === 6 || (i >= 15 && i <= 17) || i === 19 || i === 21 || (i >= 27 && i <= 36)) {
+                    attendanceBox.classList.add('absent');
+                }
+
+                attendanceBox.addEventListener('click', () => {
+                    if (attendanceBox.classList.contains('present')) {
+                        attendanceBox.classList.remove('present');
+                        attendanceBox.classList.add('absent');
+                        presentDays--;
+                    } else if (attendanceBox.classList.contains('absent')) {
+                        attendanceBox.classList.remove('absent');
+                        if (attendanceBox.classList.length === 1 && attendanceBox.classList.contains('attendance-box')) {
+                            attendanceBox.classList.add('present');
+                            presentDays++;
+                        }
+                    } else {
+                        attendanceBox.classList.add('present');
+                        presentDays++;
+                    }
+                    updatePresentDaysDisplay();
+                });
+
+                attendanceGrid.appendChild(attendanceBox);
+            }
+
+            totalDaysSpan.textContent = totalPossibleDays;
+            updatePresentDaysDisplay();
+
+            saveButton.addEventListener('click', () => {
+                const attendanceData = [];
+                document.querySelectorAll('.attendance-box').forEach(box => {
+                    attendanceData.push({
+                        day: parseInt(box.dataset.day),
+                        status: box.classList.contains('present') ? 'present' : (box.classList.contains('absent') ? 'absent' : 'default')
+                    });
+                });
+                console.log('Attendance Data:', attendanceData);
+                const messageBox = document.createElement('div');
+                messageBox.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: #4CAF50;
+                    color: white;
+                    padding: 15px 30px;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                    z-index: 1000;
+                    font-family: 'Poppins', sans-serif;
+                    font-size: 1.1rem;
+                    opacity: 0;
+                    transition: opacity 0.5s ease-in-out;
+                `;
+                messageBox.textContent = 'Attendance saved successfully!';
+                document.body.appendChild(messageBox);
+
+                setTimeout(() => {
+                    messageBox.style.opacity = 1;
+                }, 10);
+
+                setTimeout(() => {
+                    messageBox.style.opacity = 0;
+                    messageBox.addEventListener('transitionend', () => messageBox.remove());
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
