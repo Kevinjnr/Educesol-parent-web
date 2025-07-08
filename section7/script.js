@@ -1,9 +1,8 @@
-// Calendar variables
+
 let currentDate = new Date();
 let currentMonth = currentDate.getMonth();
 let currentYear = currentDate.getFullYear();
 
-// Sample events data
 const events = {
     '2025-01-01': { text: 'National Day Holiday', type: 'holiday' },
     '2025-01-06': { text: 'School Resumption', type: 'school' },
@@ -90,10 +89,8 @@ function hideManageEvents() {
     document.getElementById('manageEvents').classList.remove('show');
 }
 
-// Initialize the calendar
 generateCalendar(currentMonth, currentYear);
 
-// Form submission handler
 document.getElementById('createEventForm').addEventListener('submit', function(e) {
     e.preventDefault();
     alert('Event created successfully!');
