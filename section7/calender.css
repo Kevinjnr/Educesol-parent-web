@@ -65,7 +65,6 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-/* Enhanced Navbar Styling */
 .navbar {
     background: #4CAF50;
     padding: 10px 20px;
@@ -89,6 +88,7 @@ body {
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 1px;
+    color: white;
 }
 
 .nav-arrow {
@@ -111,10 +111,6 @@ body {
     background: rgba(255, 255, 255, 0.3);
     border-color: rgba(255, 255, 255, 0.5);
     transform: scale(1.1);
-}
-
-.nav-arrow:active {
-    transform: scale(0.95);
 }
 
 .calendar-grid {
@@ -219,7 +215,6 @@ body {
     background: #f0f0f0;
 }
 
-/* Event Form Modal - Updated to match image */
 .event-form {
     display: none;
     position: fixed;
@@ -241,17 +236,17 @@ body {
 
 .form-container {
     background: white;
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 0;
     width: 100%;
-    max-width: 500px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     overflow: hidden;
 }
 
 .form-header {
     background: #f8f9fa;
-    padding: 20px 30px;
+    padding: 15px 20px;
     border-bottom: 1px solid #e9ecef;
     display: flex;
     justify-content: space-between;
@@ -260,23 +255,23 @@ body {
 
 .form-title {
     color: #4CAF50;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
     margin: 0;
     letter-spacing: 0.5px;
 }
 
-.form-header-buttons {
+.form-buttons {
     display: flex;
-    gap: 12px;
+    gap: 8px;
     align-items: center;
 }
 
 .form-btn {
-    padding: 8px 16px;
+    padding: 6px 12px;
     border: none;
-    border-radius: 6px;
-    font-size: 12px;
+    border-radius: 4px;
+    font-size: 10px;
     font-weight: 600;
     cursor: pointer;
     text-transform: uppercase;
@@ -299,53 +294,48 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-.form-content {
-    padding: 30px;
+#createEventForm {
+    padding: 20px;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .form-label {
     display: block;
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: #666;
+    margin-bottom: 5px;
+    font-size: 13px;
+    color: #333;
     font-weight: 500;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
 }
 
 .form-input, .form-textarea {
     width: 100%;
-    padding: 12px 16px;
-    border: 2px solid #e9ecef;
-    border-radius: 8px;
-    font-size: 14px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 13px;
     transition: border-color 0.3s ease;
     background: white;
+    font-family: inherit;
 }
 
 .form-input:focus, .form-textarea:focus {
     outline: none;
     border-color: #4CAF50;
-    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
 }
 
 .form-textarea {
     resize: vertical;
-    min-height: 120px;
+    min-height: 80px;
     font-family: inherit;
-}
-
-.form-row {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.form-row .form-group {
-    flex: 1;
-    margin-bottom: 0;
 }
 
 .save-btn {
@@ -353,15 +343,13 @@ body {
     color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
     font-weight: 600;
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
-    display: inline-block;
-    width: auto;
 }
 
 .save-btn:hover {
@@ -370,7 +358,7 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-/* Manage Events Modal - Updated to match image */
+/* Manage Events Modal */
 .manage-events {
     display: none;
     position: fixed;
@@ -392,18 +380,18 @@ body {
 
 .manage-container {
     background: white;
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 0;
     width: 100%;
     max-width: 900px;
     max-height: 90vh;
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .manage-header {
     background: #f8f9fa;
-    padding: 20px 30px;
+    padding: 15px 20px;
     border-bottom: 1px solid #e9ecef;
     display: flex;
     justify-content: space-between;
@@ -412,7 +400,7 @@ body {
 
 .manage-title {
     color: #4CAF50;
-    font-size: 22px;
+    font-size: 16px;
     font-weight: 700;
     margin: 0;
     letter-spacing: 0.5px;
@@ -420,15 +408,15 @@ body {
 
 .manage-header-buttons {
     display: flex;
-    gap: 12px;
+    gap: 8px;
     align-items: center;
 }
 
 .manage-btn {
-    padding: 10px 20px;
+    padding: 6px 12px;
     border: none;
-    border-radius: 6px;
-    font-size: 12px;
+    border-radius: 4px;
+    font-size: 10px;
     font-weight: 600;
     cursor: pointer;
     text-transform: uppercase;
@@ -452,65 +440,73 @@ body {
 }
 
 .manage-content {
-    padding: 30px;
+    padding: 20px;
 }
 
 .table-controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .show-entries {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 14px;
+    font-size: 13px;
     color: #666;
 }
 
 .entries-select {
-    padding: 6px 12px;
+    padding: 4px 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 13px;
     background: white;
 }
 
 .search-box {
-    padding: 8px 16px;
+    padding: 6px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 13px;
     width: 200px;
 }
 
 .events-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid #e9ecef;
 }
 
 .events-table th {
     background: #f8f9fa;
-    padding: 16px 20px;
+    padding: 12px;
     text-align: left;
     font-weight: 600;
     color: #495057;
-    font-size: 14px;
-    border-bottom: 2px solid #e9ecef;
+    font-size: 13px;
+    border-bottom: 1px solid #e9ecef;
+    border-right: 1px solid #e9ecef;
+}
+
+.events-table th:last-child {
+    border-right: none;
 }
 
 .events-table td {
-    padding: 16px 20px;
-    border-bottom: 1px solid #f1f3f4;
-    font-size: 14px;
+    padding: 12px;
+    border-bottom: 1px solid #e9ecef;
+    border-right: 1px solid #e9ecef;
+    font-size: 13px;
     vertical-align: middle;
+}
+
+.events-table td:last-child {
+    border-right: none;
 }
 
 .events-table tbody tr:hover {
@@ -523,12 +519,12 @@ body {
 
 .event-tag {
     display: inline-block;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
 }
 
 .event-tag.holiday {
@@ -551,18 +547,13 @@ body {
     color: white;
 }
 
-.action-buttons {
-    display: flex;
-    gap: 8px;
-}
-
 .action-btn {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8px;
+    padding: 4px 8px;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 14px;
     transition: all 0.3s ease;
 }
 
@@ -575,28 +566,28 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 30px;
-    padding-top: 20px;
+    margin-top: 15px;
+    padding-top: 15px;
     border-top: 1px solid #e9ecef;
 }
 
 .pagination-info {
-    font-size: 14px;
+    font-size: 13px;
     color: #666;
 }
 
 .pagination-controls {
     display: flex;
-    gap: 8px;
+    gap: 5px;
 }
 
 .page-btn {
-    padding: 8px 12px;
+    padding: 6px 12px;
     border: 1px solid #ddd;
     background: white;
     cursor: pointer;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 13px;
     transition: all 0.3s ease;
 }
 
@@ -624,66 +615,27 @@ body {
     }
     
     .manage-content {
-        padding: 20px;
+        padding: 15px;
     }
     
     .table-controls {
         flex-direction: column;
-        gap: 15px;
+        gap: 10px;
         align-items: stretch;
     }
     
     .events-table {
-        font-size: 12px;
+        font-size: 11px;
     }
     
     .events-table th,
     .events-table td {
-        padding: 12px 8px;
+        padding: 8px 6px;
     }
     
     .pagination {
         flex-direction: column;
-        gap: 15px;
+        gap: 10px;
         text-align: center;
-    }
-}
-
-@media (max-width: 600px) {
-    .calendar-header {
-        padding: 10px;
-    }
-    
-    .header-buttons {
-        top: 10px;
-        right: 10px;
-    }
-    
-    .btn {
-        padding: 6px 12px;
-        font-size: 10px;
-    }
-    
-    .navbar {
-        padding: 8px 15px;
-    }
-    
-    .month-navigation {
-        font-size: 16px;
-    }
-    
-    .nav-arrow {
-        width: 35px;
-        height: 35px;
-        font-size: 16px;
-    }
-    
-    .day {
-        min-height: 50px;
-        font-size: 12px;
-    }
-
-    .form-container {
-        padding: 15px;
     }
 }
