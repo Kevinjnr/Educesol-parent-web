@@ -1,83 +1,59 @@
-// Calendar functionality
+// Calendar variables
 let currentDate = new Date();
 let currentMonth = currentDate.getMonth();
 let currentYear = currentDate.getFullYear();
 
-const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
-    "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
-
 // Sample events data
 const events = {
-    '2025-01-01': { name: 'National Day holiday', type: 'holiday' },
-    '2025-01-06': { name: 'School Resumption', type: 'school' },
-    '2025-01-20': { name: 'Personal written', type: 'regular' },
-    '2025-01-25': { name: 'PTA Meeting', type: 'holiday' }
+    '2025-01-01': { text: 'National Day Holiday', type: 'holiday' },
+    '2025-01-06': { text: 'School Resumption', type: 'school' },
+    '2025-01-20': { text: 'Personal Written', type: 'personal' },
+    '2025-01-25': { text: 'PTA Meeting', type: 'meeting' }
 };
 
-function generateCalendar() {
-    const monthYearElement = document.getElementById('monthYear');
-    monthYearElement.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+const monthNames = [
+    'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE',
+    'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
+];
 
+function generateCalendar(month, year) {
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const startDate = new Date(firstDay);
+    startDate.setDate(startDate.getDate() - (firstDay.getDay() || 7) + 1);
+    
     const calendarDays = document.getElementById('calendar-days');
     calendarDays.innerHTML = '';
-
-    const firstDay = new Date(currentYear, currentMonth, 1);
-    const lastDay = new Date(currentYear, currentMonth + 1, 0);
-    const daysInMonth = lastDay.getDate();
-    const startingDayOfWeek = firstDay.getDay();
-
-    // Adjust for Monday start
-    const startDay = startingDayOfWeek === 0 ? 6 : startingDayOfWeek - 1;
-
-    // Previous month days
-    const prevMonth = new Date(currentYear, currentMonth, 0);
-    for (let i = startDay - 1; i >= 0; i--) {
-        const day = prevMonth.getDate() - i;
-        const dayElement = document.createElement('div');
-        dayElement.className = 'day other-month';
-        dayElement.textContent = day;
-        calendarDays.appendChild(dayElement);
-    }
-
-    // Current month days
-    for (let day = 1; day <= daysInMonth; day++) {
+    
+    for (let i = 0; i < 42; i++) {
+        const date = new Date(startDate);
+        date.setDate(startDate.getDate() + i);
+        
         const dayElement = document.createElement('div');
         dayElement.className = 'day';
-        dayElement.textContent = day;
-
-        // Check if today
-        const today = new Date();
-        if (currentYear === today.getFullYear() && 
-            currentMonth === today.getMonth() && 
-            day === today.getDate()) {
+        dayElement.textContent = date.getDate();
+        
+        if (date.getMonth() !== month) {
+            dayElement.classList.add('other-month');
+        }
+        
+        if (date.toDateString() === new Date().toDateString()) {
             dayElement.classList.add('today');
         }
-
-        // Check for events
-        const dateKey = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        if (events[dateKey]) {
-            dayElement.classList.add('has-event');
-            if (events[dateKey].type === 'holiday') {
-                dayElement.classList.add('holiday');
-            }
+        
+        const dateString = date.toISOString().split('T')[0];
+        if (events[dateString]) {
+            dayElement.classList.add('has-event', events[dateString].type);
             const eventText = document.createElement('div');
             eventText.className = 'event-text';
-            eventText.textContent = events[dateKey].name;
+            eventText.textContent = events[dateString].text;
             dayElement.appendChild(eventText);
         }
-
+        
         calendarDays.appendChild(dayElement);
     }
-
-    // Next month days
-    const totalCells = calendarDays.children.length;
-    const remainingCells = 42 - totalCells; // 6 rows × 7 days
-    for (let day = 1; day <= remainingCells; day++) {
-        const dayElement = document.createElement('div');
-        dayElement.className = 'day other-month';
-        dayElement.textContent = day;
-        calendarDays.appendChild(dayElement);
-    }
+    
+    document.getElementById('monthYear').textContent = `${monthNames[month]} ${year}`;
 }
 
 function previousMonth() {
@@ -86,7 +62,7 @@ function previousMonth() {
         currentMonth = 11;
         currentYear--;
     }
-    generateCalendar();
+    generateCalendar(currentMonth, currentYear);
 }
 
 function nextMonth() {
@@ -95,7 +71,7 @@ function nextMonth() {
         currentMonth = 0;
         currentYear++;
     }
-    generateCalendar();
+    generateCalendar(currentMonth, currentYear);
 }
 
 function showEventForm() {
@@ -114,5 +90,12 @@ function hideManageEvents() {
     document.getElementById('manageEvents').classList.remove('show');
 }
 
-// Initialize calendar
-generateCalendar();
+// Initialize the calendar
+generateCalendar(currentMonth, currentYear);
+
+// Form submission handler
+document.getElementById('createEventForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Event created successfully!');
+    hideEventForm();
+});
