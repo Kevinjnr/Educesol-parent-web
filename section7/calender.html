@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar Interface</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="calendar-container">
+        <div class="calendar-header">
+            <div class="header-buttons">
+                <button class="btn btn-manage" onclick="showManageEvents()">MANAGE</button>
+                <button class="btn btn-new" onclick="showEventForm()">NEW EVENT</button>
+            </div>
+            <br><br>
+            <div class="navbar">
+                <div class="month-navigation">
+                    <button class="nav-arrow" id="prevMonth" onclick="previousMonth()">‹</button>
+                    <div class="month-year-display">
+                        <span id="monthYear">JANUARY 2025</span>
+                    </div>
+                    <button class="nav-arrow" id="nextMonth" onclick="nextMonth()">›</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="calendar-grid">
+            <div class="weekdays">
+                <div class="weekday">Mon</div>
+                <div class="weekday">Tue</div>
+                <div class="weekday">Wed</div>
+                <div class="weekday">Thu</div>
+                <div class="weekday">Fri</div>
+                <div class="weekday">Sat</div>
+                <div class="weekday">Sun</div>
+            </div>
+            <div class="days" id="calendar-days">
+                <!-- Calendar days will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="event-form" id="eventForm">
+        <div class="form-container">
+            <div class="form-header">
+                <h2 class="form-title">CREATE EVENT</h2>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div class="form-buttons">
+                        <button class="form-btn manage" onclick="showManageEvents()">MANAGE</button>
+                        <button class="form-btn new">NEW EVENT</button>
+                    </div>
+                    <button class="close-btn" id="closeForm" onclick="hideEventForm()">×</button>
+                </div>
+            </div>
+
+            <form id="createEventForm">
+                <div class="form-group">
+                    <label class="form-label">From</label>
+                    <input type="text" class="form-input" placeholder="Event start time">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="date" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <input type="time" class="form-input">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">To</label>
+                    <input type="text" class="form-input" placeholder="Event end time">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="date" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <input type="time" class="form-input">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <textarea class="form-textarea" placeholder="Event description..."></textarea>
+                </div>
+
+                <button type="submit" class="save-btn">SAVE</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="manage-events" id="manageEvents">
+        <div class="manage-container">
+            <div class="manage-header">
+                <h2 class="manage-title">MANAGE EVENTS</h2>
+                <div class="manage-header-buttons">
+                    <button class="manage-btn green">MANAGE</button>
+                    <button class="manage-btn compose">COMPOSE NEW</button>
+                    <button class="close-btn" onclick="hideManageEvents()">×</button>
+                </div>
+            </div>
+
+            <div class="manage-content">
+                <div class="table-controls">
+                    <div class="show-entries">
+                        <span>Show</span>
+                        <select class="entries-select">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <span>entries</span>
+                    </div>
+                    <input type="text" class="search-box" placeholder="Search...">
+                </div>
+
+                <table class="events-table">
+                    <thead>
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Recipients</th>
+                            <th>Info</th>
+                            <th>Date</th>
+                            <th>Edit Event</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="event-tag holiday">National Day Holiday</span></td>
+                            <td>All</td>
+                            <td>View notification</td>
+                            <td>1/1/2025</td>
+                            <td><button class="action-btn" title="Edit">✏️</button></td>
+                            <td><button class="action-btn" title="Delete">🗑️</button></td>
+                        </tr>
+                        <tr>
+                            <td><span class="event-tag school">School Resumption</span></td>
+                            <td>All</td>
+                            <td>View notification</td>
+                            <td>6/1/2025</td>
+                            <td><button class="action-btn" title="Edit">✏️</button></td>
+                            <td><button class="action-btn" title="Delete">🗑️</button></td>
+                        </tr>
+                        <tr>
+                            <td><span class="event-tag personal">Personal Written</span></td>
+                            <td>All Teachers</td>
+                            <td>View notification</td>
+                            <td>20/1/2025</td>
+                            <td><button class="action-btn" title="Edit">✏️</button></td>
+                            <td><button class="action-btn" title="Delete">🗑️</button></td>
+                        </tr>
+                        <tr>
+                            <td><span class="event-tag meeting">PTA Meeting</span></td>
+                            <td>All</td>
+                            <td>View notification</td>
+                            <td>25/1/2025</td>
+                            <td><button class="action-btn" title="Edit">✏️</button></td>
+                            <td><button class="action-btn" title="Delete">🗑️</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="pagination">
+                    <div class="pagination-info">Showing 1 to 4 of 4 entries</div>
+                    <div class="pagination-controls">
+                        <button class="page-btn" disabled>Previous</button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
