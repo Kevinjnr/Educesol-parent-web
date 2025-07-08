@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Activities View</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --dark-green: #1AA939;
+            --white: #FFFFFF;
+            --gray-bg: #F8F8F8;
+            --text-dark: #333;
+            --light-blue-bg: #E0F2F7;
+            --term-blue-1: #3b4d9e;
+            --term-blue-2: #1e90ff;
+            --header-dark-green: #1AA939;
+            --main-heading-dark-blue: #2c3e50;
+            --card-bg-blue: #3498db;
+            --card-text-light-blue: #ecf0f1;
+            --section-header-bg: #e0e7ff;
+            --table-header-bg: #a7d9f7;
+            --table-row-even: #f0f8ff;
+            --table-row-odd: #ffffff;
+            --button-blue: #3498db;
+            --profile-avatar-blue: #3498db;
+            --profile-border-color: #e2e8f0;
+            --activity-card-green: #E6FFE6;
+            --activity-card-yellow: #FFFBE6;
+            --activity-card-blue: #E6F7FF;
+            --activity-border-green: #1AA939;
+            --activity-border-yellow: #FFC107;
+            --activity-border-blue: #3498db;
+            --timeline-highlight: #3498db;
+        }
+
+        html {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+        @layer base {
+            body {
+                background-color: var(--light-blue-bg);
+                color: var(--text-dark);
+            }
+            header {
+                background-color: var(--header-dark-green);
+                color: var(--white);
+            }
+        }
+
+        .header-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-logo {
+            width: 80px;
+        }
+        .header-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        .header-dropdown {
+            position: relative;
+        }
+        .header-menu-icon {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+        }
+        .dropdown-content {
+            position: absolute;
+            top: 36px;
+            left: 0;
+            background-color: white;
+            min-width: 120px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            display: none;
+            z-index: 10;
+        }
+        .header-dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-item {
+            display: block;
+            padding: 8px 12px;
+            color: #4a5568;
+            font-size: 0.875rem;
+            text-decoration: none;
+        }
+        .dropdown-item:hover {
+            background-color: #f7fafc;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header-search-input {
+            height: 32px;
+            padding: 0 12px;
+            border-radius: 6px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 0.875rem;
+            outline: none;
+        }
+        .header-search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .header-icon {
+            width: 32px;
+            height: 32px;
+        }
+        .header-user-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 9999px;
+        }
+
+        .main-content {
+            max-width: 1152px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 32px 16px;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            line-height: 1;
+            font-weight: 700;
+            color: var(--dark-green);
+            margin-bottom: 32px;
+        }
+
+        .search-class-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+            background-color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        .search-class-input-group {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            padding: 8px 12px;
+        }
+        .search-class-input-group input {
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+        .search-class-input-group input::placeholder {
+            color: #a0aec0;
+        }
+        .search-class-input-group svg {
+            width: 20px;
+            height: 20px;
+            color: #a0aec0;
+            margin-right: 8px;
+        }
+        .ssia-button {
+            background-color: var(--dark-green);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .ssia-button:hover {
+            background-color: #15803d;
+        }
+        .ssia-button svg {
+            width: 16px;
+            height: 16px;
+            color: var(--white);
+        }
+
+        .date-navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .date-nav-arrow {
+            background-color: white;
+            border-radius: 9999px;
+            padding: 8px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .date-nav-arrow:hover {
+            background-color: #f0f0f0;
+        }
+        .date-nav-arrow svg {
+            width: 24px;
+            height: 24px;
+            color: #4a5568;
+        }
+        .current-date {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark-green);
+        }
+
+        .activities-layout {
+            display: flex;
+            gap: 24px;
+            background-color: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        @media (max-width: 767px) {
+            .activities-layout {
+                flex-direction: column;
+            }
+        }
+
+        .timeline-sidebar {
+            flex-shrink: 0;
+            width: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            padding-right: 16px;
+            border-right: 1px solid #e2e8f0;
+        }
+        .timeline-day {
+            text-align: right;
+            margin-bottom: 16px;
+            padding: 4px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            line-height: 1.2;
+        }
+        .timeline-day:hover {
+            background-color: #f0f8ff;
+        }
+        .timeline-day.selected {
+            background-color: var(--timeline-highlight);
+            color: var(--white);
+            font-weight: 700;
+        }
+        .timeline-day-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #718096;
+        }
+        .timeline-day.selected .timeline-day-name {
+            color: var(--white);
+        }
+        .timeline-date {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .timeline-day.selected .timeline-date {
+            color: var(--white);
+        }
+
+        .activities-content {
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            align-items: start;
+        }
+        @media (min-width: 1024px) {
+            .activities-content {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .activity-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            padding-top: 20px;
+        }
+
+        .activity-time-header {
+            font-size: 0.875rem;
+            color: #718096;
+            line-height: 1.2;
+            margin-bottom: 5px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateX(10px);
+        }
+
+        .activity-card {
+            position: relative;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            border-left: 4px solid;
+        }
+
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            top: -25px;
+            left: -4px;
+            width: 4px;
+            height: 25px;
+            border-radius: 2px 2px 0 0;
+        }
+
+        .activity-card.green {
+            background-color: var(--activity-card-green);
+            border-color: var(--activity-border-green);
+        }
+        .activity-card.green::before {
+            background-color: var(--activity-border-green);
+        }
+
+        .activity-card.yellow {
+            background-color: var(--activity-card-yellow);
+            border-color: var(--activity-border-yellow);
+        }
+        .activity-card.yellow::before {
+            background-color: var(--activity-border-yellow);
+        }
+
+        .activity-card.blue {
+            background-color: var(--activity-card-blue);
+            border-color: var(--activity-border-blue);
+        }
+        .activity-card.blue::before {
+            background-color: var(--activity-border-blue);
+        }
+
+        .activity-subject {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--main-heading-dark-blue);
+        }
+        .activity-teacher-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+        .activity-teacher-info svg {
+            width: 18px;
+            height: 18px;
+            color: #718096;
+        }
+
+        .update-button-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 32px;
+            grid-column: 1 / -1;
+        }
+        .update-button {
+            background-color: var(--dark-green);
+            color: white;
+            font-weight: 700;
+            padding: 12px 32px;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition-property: background-color;
+            transition-duration: 300ms;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        .update-button:hover {
+            background-color: #15803d;
+        }
+        .update-button-icon {
+            width: 24px;
+            height: 24px;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="header-main">
+        <div class="header-left">
+            <img src="./Logo---white 1.png" class="header-logo" alt="Educesol Logo">
+            <h1 class="header-title">Educesol</h1>
+            <div class="header-dropdown group">
+                <img src="./More.png" class="header-menu-icon" alt="Menu Icon">
+                <div class="dropdown-content">
+                    <a href="#" class="dropdown-item">Profile</a>
+                    <a href="#" class="dropdown-item">Settings</a>
+                    <a href="#" class="dropdown-item">Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <input type="text" placeholder="Search" class="header-search-input">
+            <img src="4.png" alt="Icon" class="header-icon">
+            <img src="./44 2.png" alt="User" class="header-user-icon">
+        </div>
+    </header>
+
+    <main class="main-content">
+        <h2 class="page-title">ACTIVITIES</h2>
+
+        <div class="search-class-section">
+            <div class="search-class-input-group">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <input type="text" placeholder="search class">
+            </div>
+            <button class="ssia-button">
+                [SSIA]
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+        </div>
+
+        <div class="date-navigation">
+            <div class="date-nav-arrow">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </div>
+            <span class="current-date">23rd of January 2025</span>
+            <div class="date-nav-arrow">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </div>
+        </div>
+
+        <div class="activities-layout">
+            <div class="timeline-sidebar">
+                <div class="timeline-day">
+                    <span class="timeline-day-name">Mon</span>
+                    <span class="timeline-date">20</span>
+                </div>
+                <div class="timeline-day">
+                    <span class="timeline-day-name">Tue</span>
+                    <span class="timeline-date">21</span>
+                </div>
+                <div class="timeline-day">
+                    <span class="timeline-day-name">Wed</span>
+                    <span class="timeline-date">22</span>
+                </div>
+                <div class="timeline-day selected">
+                    <span class="timeline-day-name">Thu</span>
+                    <span class="timeline-date">23</span>
+                </div>
+                <div class="timeline-day">
+                    <span class="timeline-day-name">Fri</span>
+                    <span class="timeline-date">24</span>
+                </div>
+                <div class="timeline-day">
+                    <span class="timeline-day-name">Sat</span>
+                    <span class="timeline-date">25</span>
+                </div>
+                <div class="timeline-day">
+                    <span class="timeline-day-name">Sun</span>
+                    <span class="timeline-date">26</span>
+                </div>
+            </div>
+
+            <div class="activities-content">
+                <div class="activity-item">
+                    <div class="activity-time-header">
+                        <span>08:00</span>
+                        <span>10:00</span>
+                    </div>
+                    <div class="activity-card green">
+                        <div class="activity-card-content">
+                            <h3 class="activity-subject">English Language</h3>
+                            <div class="activity-teacher-info">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h-2v-2a4 4 0 00-8 0v2H7v-2a6 6 0 0112 0v2zM12 9a3 3 0 100-6 3 3 0 000 6z"></path></svg>
+                                <span>Mr. JS Brown</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-time-header">
+                        <span>09:00</span>
+                        <span>10:00</span>
+                    </div>
+                    <div class="activity-card green">
+                        <div class="activity-card-content">
+                            <h3 class="activity-subject">English Language</h3>
+                            <div class="activity-teacher-info">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h-2v-2a4 4 0 00-8 0v2H7v-2a6 6 0 0112 0v2zM12 9a3 3 0 100-6 3 3 0 000 6z"></path></svg>
+                                <span>Mrs.DA Clara</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-time-header">
+                        <span>10:00</span>
+                        <span>10:00</span>
+                    </div>
+                    <div class="activity-card yellow">
+                        <div class="activity-card-content">
+                            <h3 class="activity-subject">Mathematics</h3>
+                            <div class="activity-teacher-info">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h-2v-2a4 4 0 00-8 0v2H7v-2a6 6 0 0112 0v2zM12 9a3 3 0 100-6 3 3 0 000 6z"></path></svg>
+                                <span>Mr. KO Chris</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-time-header">
+                        <span>11:00</span>
+                        <span>10:00</span>
+                    </div>
+                    <div class="activity-card yellow">
+                        <div class="activity-card-content">
+                            <h3 class="activity-subject">Mathematics</h3>
+                            <div class="activity-teacher-info">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h-2v-2a4 4 0 00-8 0v2H7v-2a6 6 0 0112 0v2zM12 9a3 3 0 100-6 3 3 0 000 6z"></path></svg>
+                                <span>Mr. M David</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-time-header">
+                        <span>01:00</span>
+                        <span>10:00</span>
+                    </div>
+                    <div class="activity-card blue">
+                        <div class="activity-card-content">
+                            <h3 class="activity-subject">Agriculture Science</h3>
+                            <div class="activity-teacher-info">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h-2v-2a4 4 0 00-8 0v2H7v-2a6 6 0 0112 0v2zM12 9a3 3 0 100-6 3 3 0 000 6z"></path></svg>
+                                <span>Mrs.OA Clara</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-time-header">
+                        <span>02:00</span>
+                        <span>10:00</span>
+                    </div>
+                    <div class="activity-card blue">
+                        <div class="activity-card-content">
+                            <h3 class="activity-subject">Agriculture Science</h3>
+                            <div class="activity-teacher-info">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h-2v-2a4 4 0 00-8 0v2H7v-2a6 6 0 0112 0v2zM12 9a3 3 0 100-6 3 3 0 000 6z"></path></svg>
+                                <span>Mr. AA Brian</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-time-header">
+                        <span>03:00</span>
+                        <span>10:00</span>
+                    </div>
+                    <div class="activity-card blue">
+                        <div class="activity-card-content">
+                            <h3 class="activity-subject">Biology</h3>
+                            <div class="activity-teacher-info">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h-2v-2a4 4 0 00-8 0v2H7v-2a6 6 0 0112 0v2zM12 9a3 3 0 100-6 3 3 0 000 6z"></path></svg>
+                                <span>Mr. FA Ethan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-time-header">
+                        <span>03:30</span>
+                        <span>10:00</span>
+                    </div>
+                    <div class="activity-card blue">
+                        <div class="activity-card-content">
+                            <h3 class="activity-subject">Biology</h3>
+                            <div class="activity-teacher-info">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h-2v-2a4 4 0 00-8 0v2H7v-2a6 6 0 0112 0v2zM12 9a3 3 0 100-6 3 3 0 000 6z"></path></svg>
+                                <span>Mr. EA Max</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="update-button-container">
+                    <button class="update-button">
+                        <img src="./square_14034302 1.png" alt="Update Icon" class="update-button-icon">
+                        UPDATE
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
