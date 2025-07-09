@@ -196,6 +196,30 @@
                 gap: 0;
             }
         }
+        @media (max-width: 700px) {
+      .container {
+        width: 100vw !important;
+        padding: 12px 4vw 18px 4vw !important;
+        box-sizing: border-box;
+        border-radius: 0 !important;
+        margin: 0;
+      }
+      .modal-content {
+        padding: 18px 4vw !important;
+        min-width: unset;
+        max-width: 98vw;
+        border-radius: 8px !important;
+      }
+      .header-row, .category-tabs, .table-controls {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+      }
+      table, th, td {
+        font-size: 13px !important;
+        word-break: break-word;
+      }
+    }
     </style>
 </head>
 <body>
@@ -215,7 +239,7 @@
             <img src="https://img.icons8.com/ios-filled/24/ffffff/appointment-reminders--v1.png" alt="notifications">
         </div>
         <div class="user">
-            <img src="https://img.icons8.com/ios-filled/24/2eb24c/user-male-circle.png" alt="user" style="background:#fff; border-radius:50%; margin-right:8px;">
+            <img src="https://img.icons8.com/ios-filled/24/2eb24c/user-male-circle.png" alt="user" style="background:#fff; border-radius:50%; margin-left:8px;">
         </div>
     </div>
     <div class="container">
