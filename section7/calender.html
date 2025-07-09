@@ -134,7 +134,7 @@
                             <td>View notification</td>
                             <td>1/1/2025</td>
                             <td><button class="action-btn" title="Edit">✏️</button></td>
-                            <td><button class="action-btn" title="Delete">🗑️</button></td>
+                            <td><button class="action-btn" title="Delete" onclick="showDeleteModal('National Day Holiday')">🗑️</button></td>
                         </tr>
                         <tr>
                             <td><span class="event-tag school">School Resumption</span></td>
@@ -142,7 +142,7 @@
                             <td>View notification</td>
                             <td>6/1/2025</td>
                             <td><button class="action-btn" title="Edit">✏️</button></td>
-                            <td><button class="action-btn" title="Delete">🗑️</button></td>
+                            <td><button class="action-btn" title="Delete" onclick="showDeleteModal('School Resumption')">🗑️</button></td>
                         </tr>
                         <tr>
                             <td><span class="event-tag personal">Personal Written</span></td>
@@ -150,7 +150,7 @@
                             <td>View notification</td>
                             <td>20/1/2025</td>
                             <td><button class="action-btn" title="Edit">✏️</button></td>
-                            <td><button class="action-btn" title="Delete">🗑️</button></td>
+                            <td><button class="action-btn" title="Delete" onclick="showDeleteModal('Personal Written')">🗑️</button></td>
                         </tr>
                         <tr>
                             <td><span class="event-tag meeting">PTA Meeting</span></td>
@@ -158,7 +158,7 @@
                             <td>View notification</td>
                             <td>25/1/2025</td>
                             <td><button class="action-btn" title="Edit">✏️</button></td>
-                            <td><button class="action-btn" title="Delete">🗑️</button></td>
+                            <td><button class="action-btn" title="Delete" onclick="showDeleteModal('PTA Meeting')">🗑️</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -175,6 +175,192 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Delete Confirmation Modal -->
+    <div class="delete-modal" id="deleteModal">
+        <div class="delete-modal-content">
+            <div class="warning-icon">
+                <span class="warning-symbol">⚠️</span>
+            </div>
+            <p>You are about to delete an event, are you sure you want to?</p>
+            <div class="buttons-row">
+                <button class="btn-yes" onclick="confirmDelete()">Yes</button>
+                <button class="btn-close-delete" onclick="hideDeleteModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="success-modal-content">
+            <div class="checkmark-icon">
+                <span class="checkmark-symbol">✓</span>
+            </div>
+            <p>You successfully deleted an event.</p>
+            <div class="success-actions">
+                <button class="btn-done" onclick="hideSuccessModal()">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Calendar variables
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
+
+        // Sample events data
+        const events = {
+            '2025-01-01': { text: 'National Day Holiday', type: 'holiday' },
+            '2025-01-06': { text: 'School Resumption', type: 'school' },
+            '2025-01-20': { text: 'Personal Written', type: 'personal' },
+            '2025-01-25': { text: 'PTA Meeting', type: 'meeting' }
+        };
+
+        const monthNames = [
+            'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE',
+            'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
+        ];
+
+        let currentEventToDelete = null;
+
+        // Calendar generation function
+        function generateCalendar(month, year) {
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startDate = new Date(firstDay);
+            startDate.setDate(startDate.getDate() - (firstDay.getDay() || 7) + 1);
+            
+            const calendarDays = document.getElementById('calendar-days');
+            calendarDays.innerHTML = '';
+            
+            for (let i = 0; i < 42; i++) {
+                const date = new Date(startDate);
+                date.setDate(startDate.getDate() + i);
+                
+                const dayElement = document.createElement('div');
+                dayElement.className = 'day';
+                dayElement.textContent = date.getDate();
+                
+                if (date.getMonth() !== month) {
+                    dayElement.classList.add('other-month');
+                }
+                
+                if (date.toDateString() === new Date().toDateString()) {
+                    dayElement.classList.add('today');
+                }
+                
+                const dateString = date.toISOString().split('T')[0];
+                if (events[dateString]) {
+                    dayElement.classList.add('has-event', events[dateString].type);
+                    const eventText = document.createElement('div');
+                    eventText.className = 'event-text';
+                    eventText.textContent = events[dateString].text;
+                    dayElement.appendChild(eventText);
+                }
+                
+                calendarDays.appendChild(dayElement);
+            }
+            
+            document.getElementById('monthYear').textContent = `${monthNames[month]} ${year}`;
+        }
+
+        // Modal functions
+        function showDeleteModal(eventName) {
+            currentEventToDelete = eventName;
+            document.getElementById('deleteModal').style.display = 'flex';
+        }
+
+        function hideDeleteModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+            currentEventToDelete = null;
+        }
+
+        function confirmDelete() {
+            // Here you would typically make an API call to delete the event
+            console.log('Deleting event:', currentEventToDelete);
+            
+            // Hide delete modal
+            hideDeleteModal();
+            
+            // Show success modal
+            document.getElementById('successModal').style.display = 'flex';
+            
+            // Remove the event from the table (for demo purposes)
+            removeEventFromTable(currentEventToDelete);
+        }
+
+        function hideSuccessModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+
+        function removeEventFromTable(eventName) {
+            const rows = document.querySelectorAll('.events-table tbody tr');
+            rows.forEach(row => {
+                const eventTag = row.querySelector('.event-tag');
+                if (eventTag && eventTag.textContent === eventName) {
+                    row.remove();
+                }
+            });
+        }
+
+        // Navigation functions
+        function previousMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            generateCalendar(currentMonth, currentYear);
+        }
+
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            generateCalendar(currentMonth, currentYear);
+        }
+
+        // Panel visibility functions
+        function showManageEvents() {
+            document.getElementById('manageEvents').classList.add('show');
+        }
+
+        function hideManageEvents() {
+            document.getElementById('manageEvents').classList.remove('show');
+        }
+
+        function showEventForm() {
+            document.getElementById('eventForm').classList.add('show');
+        }
+
+        function hideEventForm() {
+            document.getElementById('eventForm').classList.remove('show');
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const deleteModal = document.getElementById('deleteModal');
+            const successModal = document.getElementById('successModal');
+            
+            if (event.target === deleteModal) {
+                hideDeleteModal();
+            }
+            if (event.target === successModal) {
+                hideSuccessModal();
+            }
+        }
+
+        // Form submission handler
+        document.getElementById('createEventForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Event created successfully!');
+            hideEventForm();
+        });
+
+        // Initialize the calendar
+        generateCalendar(currentMonth, currentYear);
+    </script>
 </body>
 </html>
