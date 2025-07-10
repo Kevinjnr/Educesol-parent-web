@@ -1,3 +1,20 @@
 {
-    "liveServer.settings.port": 5513
+    "liveServer.settings.port": 5500,
+    "liveServer.settings.root": "/",
+    "liveServer.settings.ignoreFiles": [
+        ".vscode/**",
+        "node_modules/**",
+        "dist/**",
+        "build/**",
+        "coverage/**",
+        "tmp/**",
+        ".git/**"
+    ],
+    "liveServer.settings.wait": 100,
+    "liveServer.settings.fullReload": true,
+    "liveServer.settings.useBrowserPreview": false,
+    "liveServer.settings.donotVerifyTags": true,
+    "liveServer.settings.customBrowser": "chrome",
+    "liveServer.settings.noBrowser": false,
+    "liveServer.settings.host": "localhost"
 }
