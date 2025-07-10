@@ -1,5 +1,5 @@
 {
-    "liveServer.settings.port": 5500,
+    "liveServer.settings.port": 5519,
      "liveServer.settings.host": "localhost",
     "liveServer.settings.root": "/",
     "liveServer.settings.ignoreFiles": [
@@ -16,6 +16,6 @@
     "liveServer.settings.useBrowserPreview": false,
     "liveServer.settings.donotVerifyTags": true,
     "liveServer.settings.customBrowser": "chrome",
-    "liveServer.settings.noBrowser": false,
-   
+    "liveServer.settings.noBrowser": false
+
 }
