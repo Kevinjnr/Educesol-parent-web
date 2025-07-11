@@ -1,6 +1,6 @@
 {
     "liveServer.settings.port": 5500,
-     "liveServer.settings.host": "localhost",
+    "liveServer.settings.host": "192.168.0.153", 
     "liveServer.settings.root": "/",
     "liveServer.settings.ignoreFiles": [
         ".vscode/**",
@@ -17,5 +17,4 @@
     "liveServer.settings.donotVerifyTags": true,
     "liveServer.settings.customBrowser": "chrome",
     "liveServer.settings.noBrowser": false
-
 }
