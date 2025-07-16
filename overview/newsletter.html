@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter</title>
+    <style>
+        body {
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 30px;
+            font-family: "Segoe UI", Arial, sans-serif;
+            margin: 0;
+        }
+
+        .newsletter-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #fff;
+            border: 2px solid #22C55E;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-buttons {
+            display: flex;
+            justify-content: flex-end;
+            padding: 18px 18px 0 0;
+        }
+
+        .manage-btn {
+            background: #e5f5ea;
+            color: #22C55E;
+            border: 1px solid #22C55E;
+            border-radius: 6px;
+            padding: 7px 20px;
+            margin-right: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .compose-btn {
+            background: #22C55E;
+            color: #fff;
+            border: 1px solid #22C55E;
+            border-radius: 6px;
+            padding: 7px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .plus-icon {
+            display: inline-block;
+            font-size: 22px;
+            font-weight: 700;
+            margin-right: 6px;
+            line-height: 0;
+        }
+
+        .title {
+            color: #22C55E;
+            font-weight: 700;
+            font-size: 28px;
+            margin: 12px 0 10px 26px;
+        }
+
+        .main-content {
+            padding: 0 24px 24px 24px;
+        }
+
+        .image-result-container {
+            margin: 14px 0 12px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .image-container {
+            border: 3px solid #1570ef;
+            border-radius: 10px;
+            background: #e9f0fa;
+            padding: 8px;
+            width: 390px;
+            height: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .exam-image {
+            max-height: 110px;
+            object-fit: contain;
+        }
+
+        .result-label {
+            background: #e5f0fe;
+            color: #1570ef;
+            border-radius: 5px;
+            padding: 6px 20px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .greeting {
+            font-size: 19px;
+            margin: 15px 0 6px 0;
+            font-weight: 400;
+        }
+
+        .highlight {
+            color: #22C55E;
+            font-weight: 700;
+        }
+
+        .divider {
+            margin: 10px 0;
+            border: 0;
+            border-top: 1px solid #eee;
+        }
+
+        .date-time {
+            display: flex;
+            justify-content: flex-end;
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+
+        .time {
+            margin-right: 12px;
+        }
+
+        .message-box {
+            background: #fafafa;
+            border: 1.5px solid #e4e4e4;
+            border-radius: 8px;
+            padding: 18px;
+            font-size: 15px;
+            color: #222;
+            margin-bottom: 16px;
+        }
+
+        .message-box p {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        .message-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .signature {
+            text-align: right;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        .save-btn-container {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .save-btn {
+            background: #22C55E;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 40px;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="newsletter-container">
+        <!-- Header -->
+        <div class="header-buttons">
+            <button class="manage-btn">MANAGE</button>
+            <button class="compose-btn">
+                <span class="plus-icon">+</span>
+                COMPOSE NEW
+            </button>
+        </div>
+        <!-- Title -->
+        <div class="title">News Letter</div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Image and result label -->
+            <div class="image-result-container">
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/350x110?text=Exam+Sheets" alt="Exam Sheets" class="exam-image" onerror="this.src='https://via.placeholder.com/350x110?text=Exam+Sheets'">
+                </div>
+                <div>
+                    <span class="result-label">Result</span>
+                </div>
+            </div>
+            <!-- Greeting -->
+            <div class="greeting">
+                <span class="highlight">Dear Tola,</span> Your Results Are now Available On the App
+            </div>
+            <hr class="divider">
+            <!-- Date & time -->
+            <div class="date-time">
+                <span class="time">3min ago</span>
+                <span>29th of may 2023</span>
+            </div>
+            <!-- Main message -->
+            <div class="message-box">
+                <p>
+                    In an official statement today, the Dean of Studies announced that the examination results for 400 students have been <b>released</b>. This development marks the culmination of months of rigorous academic effort and assessment, providing students with feedback on their performance.
+                    The release of these results is a significant milestone for the students, who have eagerly awaited this moment. The Dean emphasized the importance of these results in shaping the academic trajectories and future opportunities for the students. He also expressed gratitude to the faculty and administrative staff for their dedication in ensuring the accuracy and timely release of the results.
+                </p>
+                <p>
+                    <b>Students can access their results through the school's official online portal</b>, and any inquiries or concerns can be directed to the administration office. The Dean encouraged students to review their results carefully and to seek guidance from academic advisors if needed.
+                </p>
+                <p>
+                    "We are proud of our students' hard work and resilience. This is a moment to celebrate their achievements and to look forward to new academic challenges," said the Dean.<br>
+                    The school community is encouraged to support and congratulate the students as they continue their educational journeys.
+                </p>
+                <div class="signature">4o</div>
+            </div>
+            <!-- Save Button -->
+            <div class="save-btn-container">
+                <button class="save-btn">SAVE</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

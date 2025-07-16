@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #f8f9fa;
+            padding: 20px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .title-section {
+            background: white;
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .title-section h1 {
+            color: #28a745;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-manage, .btn-compose {
+            background: white;
+            color: #28a745;
+            border: 1px solid #28a745;
+        }
+
+        .btn-manage.active, 
+        .btn-compose.active {
+            background: #28a745;
+            color: white;
+            border: 1px solid #28a745;
+        }
+
+        .btn-compose::before {
+            content: "✚";
+            font-size: 12px;
+        }
+
+        .controls {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .left-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .show-entries {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .show-entries select {
+            padding: 4px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-box input {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        /* ALL NOTIFICATIONS VIEW */
+        .notification-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            gap: 15px;
+        }
+
+        .notification-item:hover {
+            background: #f8f9fa;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            background: #28a745;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .notification-text {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .notification-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #999;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .tag {
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .tag-result {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .tag-social {
+            background: #9e9e9e;
+            color: white;
+        }
+
+        .tag-important {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+
+        .tag-payment {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .tag-dashboard {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* MANAGE NOTIFICATIONS VIEW */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            margin: 0 2px;
+            border-radius: 3px;
+            color: #666;
+        }
+
+        .action-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .edit-btn {
+            color: #17a2b8;
+        }
+
+        .delete-btn {
+            color: #dc3545;
+        }
+
+        /* COMPOSE NEW VIEW */
+        .compose-form {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .tag-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .tag-option {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            background: white;
+            transition: all 0.2s;
+        }
+
+        .tag-option.selected {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+
+        .tag-option:hover {
+            border-color: #28a745;
+        }
+
+        .custom-tag-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .custom-tag-input input {
+            flex: 1;
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .color-picker {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .recipient-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .recipient-option {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            background: white;
+            transition: all 0.2s;
+        }
+
+        .recipient-option.selected {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+
+        .recipient-option:hover {
+            border-color: #28a745;
+        }
+
+        .direct-message {
+            margin-top: 10px;
+        }
+
+        .direct-message input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .create-btn {
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            float: right;
+        }
+
+        .create-btn:hover {
+            background: #218838;
+        }
+
+        /* PAGINATION */
+        .pagination {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            gap: 20px;
+        }
+
+        .pagination-info {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .pagination-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .page-btn {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .page-btn.active {
+            background: #fefffe;
+            color: white;
+            border-color: #28a745;
+        }
+
+        .page-btn:hover:not(.active) {
+            background: #f8f9fa;
+        }
+
+        .page-btn:disabled {
+            background: #f8f9fa;
+            cursor: not-allowed;
+            color: #999;
+        }
+
+        /* VIEW STATES */
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                flex-direction: row;
+                justify-content: flex-end;
+                text-align: right;
+            }
+
+            .title-section {
+                text-align: left;
+            }
+
+            .title-section h1 {
+                text-align: left;
+            }
+
+            .header-buttons {
+                justify-content: center;
+            }
+
+            .controls {
+                flex-direction: row;
+                gap: 15px;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .left-controls {
+                flex-direction: row;
+                gap: 15px;
+                align-items: center;
+            }
+
+            .search-box {
+                align-self: center;
+            }
+
+            .search-box input {
+                width: 150px;
+            }
+
+            .table-container {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 8px 4px;
+            }
+
+            .notification-item {
+                padding: 12px 15px;
+            }
+
+            .notification-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+
+            .tag-selector,
+            .recipient-selector {
+                gap: 8px;
+            }
+
+            .tag-option,
+            .recipient-option {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+
+            .pagination {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .tag {
+                font-size: 10px;
+                padding: 2px 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title-section h1 {
+                font-size: 16px;
+            }
+
+            .btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            table {
+                font-size: 11px;
+            }
+
+            th, td {
+                padding: 6px 2px;
+            }
+
+            .notification-item {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .notification-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .notification-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .pagination-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .custom-tag-input {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-buttons">
+                <button class="btn btn-manage" onclick="showManageView()">MANAGE</button>
+                <button class="btn btn-compose" onclick="showComposeView()">COMPOSE NEW</button>
+            </div>
+        </div>
+
+        <!-- ALL NOTIFICATIONS VIEW -->
+        <div id="allNotificationsView" class="view active">
+            <div class="title-section">
+                <h1>ALL NOTIFICATION</h1>
+            </div>
+
+            <div class="controls">
+                <div class="left-controls">
+                    <div class="show-entries">
+                        <span>Show</span>
+                        <select>
+                            <option>10</option>
+                            <option>25</option>
+                            <option>50</option>
+                            <option>100</option>
+                        </select>
+                        <span>entries</span>
+                    </div>
+                </div>
+                <div class="search-box">
+                    <span>Search:</span>
+                    <input type="text" placeholder="">
+                </div>
+            </div>
+
+            <div class="notifications-list">
+                <div class="notification-item">
+                    <div class="notification-icon">🔔</div>
+                    <div class="notification-content">
+                        <div class="notification-header">
+                            <span class="tag tag-result">Result</span>
+                            <span class="notification-title">Tola result is available in the app</span>
+                        </div>
+                        <div class="notification-text">
+                            The dean of studies has assigned a number of 400 results to be released today...
+                        </div>
+                        <div class="notification-meta">
+                            <span>29th of may 2023</span>
+                            <span>3 min ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-icon">🔔</div>
+                    <div class="notification-content">
+                        <div class="notification-header">
+                            <span class="tag tag-important">Important</span>
+                            <span class="notification-title">PTA meeting date release</span>
+                        </div>
+                        <div class="notification-text">
+                            We are pleased to invite you to our upcoming PTA meeting on the 12th of August...
+                        </div>
+                        <div class="notification-meta">
+                            <span>28th of may 2023</span>
+                            <span>14 hrs ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-icon">🔔</div>
+                    <div class="notification-content">
+                        <div class="notification-header">
+                            <span class="tag tag-payment">Payment</span>
+                            <span class="notification-title">220,000 NGN has been received</span>
+                        </div>
+                        <div class="notification-text">
+                            This is to confirm that we have received the recent school payment made from...
+                        </div>
+                        <div class="notification-meta">
+                            <span>27th of may 2023</span>
+                            <span>2days ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-icon">🔔</div>
+                    <div class="notification-content">
+                        <div class="notification-header">
+                            <span class="tag tag-dashboard">Dashboard</span>
+                            <span class="notification-title">your Academic performance incresed by 20%</span>
+                        </div>
+                        <div class="notification-text">
+                            We are thrilled to announce a substantial improvement in our students' academic...
+                        </div>
+                        <div class="notification-meta">
+                            <span>26th of may 2023</span>
+                            <span>4days ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-icon">🔔</div>
+                    <div class="notification-content">
+                        <div class="notification-header">
+                            <span class="tag tag-social">Social</span>
+                            <span class="notification-title">The Africa culture and history, a book by chinyere (head girl)</span>
+                        </div>
+                        <div class="notification-text">
+                            one of our talented students, will be hosting a book reading session this weekend...
+                        </div>
+                        <div class="notification-meta">
+                            <span>22th of may 2023</span>
+                            <span>1 week ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <div class="pagination-info">
+                    Showing 1 to 10 of 502 entries
+                </div>
+                <div class="pagination-buttons">
+                    <button class="page-btn" disabled>Previous</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MANAGE NOTIFICATIONS VIEW -->
+        <div id="manageNotificationsView" class="view">
+            <div class="title-section">
+                <h1>MANAGE NOTIFICATION</h1>
+            </div>
+
+            <div class="controls">
+                <div class="left-controls">
+                    <div class="show-entries">
+                        <span>Show</span>
+                        <select>
+                            <option>10</option>
+                            <option>25</option>
+                            <option>50</option>
+                            <option>100</option>
+                        </select>
+                        <span>entries</span>
+                    </div>
+                </div>
+                <div class="search-box">
+                    <span>Search:</span>
+                    <input type="text" placeholder="">
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Notification Tag</th>
+                            <th>Recipients</th>
+                            <th>Info</th>
+                            <th>Date</th>
+                            <th>Edit News</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="tag tag-result">Result</span></td>
+                            <td>All Student</td>
+                            <td>View Notification</td>
+                            <td>13-2-2017</td>
+                            <td><button class="action-btn edit-btn">✏️</button></td>
+                            <td><button class="action-btn delete-btn">🗑️</button></td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-social">Social</span></td>
+                            <td>All</td>
+                            <td>View Notification</td>
+                            <td>20-2-2017</td>
+                            <td><button class="action-btn edit-btn">✏️</button></td>
+                            <td><button class="action-btn delete-btn">🗑️</button></td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-important">Important</span></td>
+                            <td>All Teachers</td>
+                            <td>View Notification</td>
+                            <td>15-2-2017</td>
+                            <td><button class="action-btn edit-btn">✏️</button></td>
+                            <td><button class="action-btn delete-btn">🗑️</button></td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-payment">Payment</span></td>
+                            <td>gananithan_sbat</td>
+                            <td>View Notification</td>
+                            <td>26-4-2017</td>
+                            <td><button class="action-btn edit-btn">✏️</button></td>
+                            <td><button class="action-btn delete-btn">🗑️</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <div class="pagination-info">
+                    Showing 1 to 10 of 500 entries
+                </div>
+                <div class="pagination-buttons">
+                    <button class="page-btn" disabled>Previous</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMPOSE NEW VIEW -->
+        <div id="composeNewView" class="view">
+            <div class="title-section">
+                <h1>COMPOSE NEW</h1>
+            </div>
+
+            <div class="compose-form">
+                <div class="form-group">
+                    <label class="form-label">Create Tag</label>
+                    <div class="tag-selector">
+                        <div class="tag-option tag-result" onclick="selectTag(this)">Result</div>
+                        <div class="tag-option tag-important" onclick="selectTag(this)">Important</div>
+                        <div class="tag-option tag-payment" onclick="selectTag(this)">Payment</div>
+                        <div class="tag-option tag-dashboard" onclick="selectTag(this)">Dashboard</div>
+                        <div class="tag-option tag-social" onclick="selectTag(this)">Social</div>
+                        <div class="tag-option" style="background: #ffcccb; color: #000;" onclick="selectTag(this)">PTA</div>
+                    </div>
+                    <div class="custom-tag-input">
+                        <input type="text" placeholder="New Tag">
+                        <span>Pick color</span>
+                        <input type="color" class="color-picker" value="#28a745">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Recipients</label>
+                    <div class="recipient-selector">
+                        <div class="recipient-option" onclick="selectRecipient(this)">Students</div>
+                        <div class="recipient-option" onclick="selectRecipient(this)">Teachers</div>
+                        <div class="recipient-option" onclick="selectRecipient(this)">All</div>
+                    </div>
+                    <div class="direct-message">
+                        <input type="text" placeholder="Direct message / Student ID">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Compose Title</label>
+                    <input type="text" class="form-input" placeholder="Enter notification title">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Compose Body</label>
+                    <textarea class="form-textarea" placeholder="Enter notification content"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <button class="create-btn">✚ CREATE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showManageView() {
+            hideAllViews();
+            document.getElementById('manageNotificationsView').classList.add('active');
+            // Update button states
+            document.querySelector('.btn-manage').classList.add('active');
+            document.querySelector('.btn-compose').classList.remove('active');
+        }
+
+        function showComposeView() {
+            hideAllViews();
+            document.getElementById('composeNewView').classList.add('active');
+            // Update button states
+            document.querySelector('.btn-compose').classList.add('active');
+            document.querySelector('.btn-manage').classList.remove('active');
+        }
+
+        function showAllNotificationsView() {
+            hideAllViews();
+            document.getElementById('allNotificationsView').classList.add('active');
+            // Update button states
+            document.querySelector('.btn-manage').classList.remove('active');
+            document.querySelector('.btn-compose').classList.remove('active');
+        }
+
+        function hideAllViews() {
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.remove('active');
+            });
+        }
+
+        function selectTag(element) {
+            document.querySelectorAll('.tag-option').forEach(tag => {
+                tag.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+
+        function selectRecipient(element) {
+            document.querySelectorAll('.recipient-option').forEach(recipient => {
+                recipient.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            showAllNotificationsView();
+        });
+    </script>
+</body>
+</html>

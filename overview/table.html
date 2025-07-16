@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Term Grade Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 20px;
+            padding: 0;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 600px;
+        }
+        
+        h2 {
+            color: #333;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        th {
+            background-color: #4A90E2;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+        
+        .filled-row td {
+            background-color: white;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .button-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .button-label {
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .btn {
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+        }
+        
+        .btn-add {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-remove {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-add .plus-icon,
+        .btn-remove .plus-icon {
+            background-color: white;
+            color: #28a745;
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .btn-save {
+            background-color: #28a745;
+            color: white;
+            margin-left: auto;
+            font-weight: bold;
+            width: auto;
+            height: auto;
+            padding: 8px 15px;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+        
+        .plus-icon {
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>FIRST TERM</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>C.A</th>
+                    <th>Exam</th>
+                    <th>Total</th>
+                    <th>Grades</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="filled-row">
+                    <td>English</td>
+                    <td>30</td>
+                    <td>40</td>
+                    <td>70</td>
+                    <td>A</td>
+                </tr>
+                <tr>
+                    <td>Maths</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Basic Science</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Civic Education</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Fine Arts</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Literature</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="controls">
+            <div class="button-group">
+                <div class="button-row">
+                    <button class="btn btn-add">
+                        <span class="plus-icon">+</span>
+                    </button>
+                    <span class="button-label">Add Subject</span>
+                </div>
+                <div class="button-row">
+                    <button class="btn btn-remove">
+                        <span class="plus-icon">+</span>
+                    </button>
+                    <span class="button-label">Remove Subject</span>
+                </div>
+            </div>
+            <button class="btn btn-save">SAVE</button>
+        </div>
+    </div>
+</body>
+</html>
