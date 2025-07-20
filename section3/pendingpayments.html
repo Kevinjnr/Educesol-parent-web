@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Payment Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+            line-height: 1.4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header with search and date */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .search-container {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 40px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            font-size: 16px;
+        }
+
+        .date-display {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .calendar-icon {
+            color: #6c757d;
+            font-size: 16px;
+        }
+
+        /* Summary Cards */
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card.active {
+            border-color: #28a745;
+            transform: translateY(-2px);
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .card-content {
+            flex: 1;
+        }
+
+        .card-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .card-label {
+            color: #6c757d;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .total-payments {
+            background: linear-gradient(135deg, #f5a623, #d4930a);
+        }
+
+        .successful-payments {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+
+        .unsuccessful-payments {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+        }
+
+        .pending-payments {
+            background: linear-gradient(135deg, #f5a623, #d4930a);
+        }
+
+        /* Main Content */
+        .main-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .content-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-label {
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-label.total {
+            color: #6c757d;
+        }
+
+        .status-label.successful {
+            color: #28a745;
+        }
+
+        .status-label.unsuccessful {
+            color: #dc3545;
+        }
+
+        .status-label.pending {
+            color: #f5a623;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .show-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .show-control select {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .export-btn {
+            background: #28a745;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .export-btn:hover {
+            background: #218838;
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 500;
+            color: #6c757d;
+            font-size: 14px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f1f3f4;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .profile-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .payment-icons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .payment-method-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .tuition-method {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+        }
+
+        .registration-method {
+            background: linear-gradient(135deg, #f5a623, #d4930a);
+        }
+
+        .admission-method {
+            background: linear-gradient(135deg, #7b68ee, #6a5acd);
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            display: inline-block;
+            color: white;
+        }
+
+        .status-badge.successful {
+            background: #28a745;
+        }
+
+        .status-badge.unsuccessful {
+            background: #dc3545;
+        }
+
+        .status-badge.pending {
+            background: #f5a623;
+        }
+
+        .payment-count {
+            background: #6c757d;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+
+        .student-row {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .student-row:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Pagination */
+        .pagination {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .pagination-info {
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .page-btn {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .page-btn:hover {
+            background: #f8f9fa;
+        }
+
+        .page-btn.active {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+
+        .page-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Enhanced Payment Details Modal - Styled like paymentdetails.html */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 2% auto;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 900px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            gap: 10px;
+        }
+
+        .cart-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .modal-title {
+            color: #4CAF50;
+            font-size: 18px;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        /* Payment Details Table in Modal */
+        .payment-details-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .payment-details-table th {
+            background-color: #f8f9fa;
+            padding: 16px;
+            text-align: left;
+            font-weight: 500;
+            color: #6c757d;
+            font-size: 14px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .payment-details-table td {
+            padding: 16px;
+            border-bottom: 1px solid #f1f3f4;
+            font-size: 14px;
+        }
+
+        .payment-info-cell {
+            display: flex;
+            align-items: center;
+        }
+
+        .payment-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 12px;
+            position: relative;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border: 2px solid #e1f5fe;
+        }
+
+        .payment-icon-inner {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -60%);
+        }
+
+        .tuition-icon .payment-icon-inner {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+        }
+
+        .registration-icon .payment-icon-inner {
+            background: linear-gradient(135deg, #f5a623, #d4930a);
+        }
+
+        .admission-icon .payment-icon-inner {
+            background: linear-gradient(135deg, #7b68ee, #6a5acd);
+        }
+
+        .amount-cell {
+            text-align: right;
+            font-weight: 500;
+        }
+
+        .total-row {
+            font-weight: 600;
+            color: #28a745;
+        }
+
+        .total-row td {
+            border-top: 2px solid #e9ecef;
+            padding-top: 20px;
+        }
+
+        .student-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .student-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .student-details h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .student-meta {
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+
+            .search-container {
+                max-width: none;
+            }
+
+            .summary-cards {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            .card-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .card-number {
+                font-size: 20px;
+            }
+
+            .content-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            th, td {
+                padding: 12px 15px;
+                font-size: 13px;
+            }
+
+            .pagination {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+                max-height: 85vh;
+            }
+
+            .modal-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .student-info {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            table {
+                min-width: 800px;
+            }
+
+            .summary-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="search-container">
+                <div class="search-icon">🔍</div>
+                <input type="text" class="search-input" placeholder="Search student name">
+            </div>
+            <div class="date-display">
+             <span>Today</span>
+            <span id="currentDate">18th July 2025</span>
+            <span class="calendar-icon">
+        <img src="calendar.png" alt="Calendar" style="width: 16px; height: 16px; cursor: pointer;">
+            </span>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="summary-cards">
+            <div class="card active" data-type="total">
+                <div class="card-icon total-payments">💳</div>
+                <div class="card-content">
+                    <div class="card-number">207</div>
+                    <div class="card-label">Total Payments</div>
+                </div>
+            </div>
+            <div class="card" data-type="successful">
+                <div class="card-icon successful-payments">✅</div>
+                <div class="card-content">
+                    <div class="card-number">112</div>
+                    <div class="card-label">Successful Payments</div>
+                </div>
+            </div>
+            <div class="card" data-type="unsuccessful">
+                <div class="card-icon unsuccessful-payments">❌</div>
+                <div class="card-content">
+                    <div class="card-number">86</div>
+                    <div class="card-label">Unsuccessful Payments</div>
+                </div>
+            </div>
+            <div class="card" data-type="pending">
+                <div class="card-icon pending-payments">⏳</div>
+                <div class="card-content">
+                    <div class="card-number">40</div>
+                    <div class="card-label">Pending Payments</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="content-header">
+                <h2 class="status-label total">All Payments</h2>
+                <div class="controls">
+                    <div class="show-control">
+                        <span>Show</span>
+                        <select>
+                            <option>10</option>
+                            <option>25</option>
+                            <option>50</option>
+                            <option>100</option>
+                        </select>
+                        <span>Entries</span>
+                    </div>
+                    <button class="export-btn">Export</button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Class</th>
+                            <th>Date / Time</th>
+                            <th>Payment Details</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentsTable">
+                        <!-- Table content will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <div class="pagination-info">Showing <span id="entriesStart">1</span> to <span id="entriesEnd">10</span> of <span id="totalEntries">207</span> entries</div>
+                <div class="pagination-controls">
+                    <button class="page-btn disabled">Previous</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Payment Details Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="cart-icon">🛒</div>
+                <h2 class="modal-title">PAYMENT DETAILS</h2>
+                <button class="close">&times;</button>
+            </div>
+            
+            <div class="student-info">
+                <img src="profile.png" alt="Student Avatar" class="student-avatar" id="modalStudentAvatar">
+                <div class="student-details">
+                    <h3 id="modalStudentName">Student Name</h3>
+                    <div class="student-meta">
+                        <span id="modalClass">Class</span> • 
+                        <span id="modalOrderId">Order ID</span> • 
+                        <span id="modalDate">Date</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="payment-details-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Class</th>
+                            <th>Order Id</th>
+                            <th>Payment Info</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentDetailsTable">
+                        <!-- Payment details will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced sample data with detailed payment breakdowns and profile images
+        const paymentData = {
+            total: [
+                { 
+                    name: 'Anabella George', 
+                    class: 'SS3A', 
+                    date: '07-06-2024 6:30', 
+                    amount: 'NGN 122,000', 
+                    status: 'successful', 
+                    payments: ['T', 'R', 'A'],
+                    orderId: '#67586453',
+                    profileImage: 'profile.png',
+                    paymentBreakdown: [
+                        { type: 'Tuition fee', amount: '100,000', icon: 'tuition' },
+                        { type: 'Registration fee', amount: '2,000', icon: 'registration' },
+                        { type: 'Admission fee', amount: '20,000', icon: 'admission' }
+                    ]
+                },
+                { 
+                    name: 'Amaka Chukwuka', 
+                    class: 'SS2B', 
+                    date: '07-06-2024 6:30', 
+                    amount: 'NGN 102,000', 
+                    status: 'unsuccessful', 
+                    payments: ['T', 'R'],
+                    orderId: '#67586454',
+                    profileImage: 'profile.png',
+                    paymentBreakdown: [
+                        { type: 'Tuition fee', amount: '100,000', icon: 'tuition' },
+                        { type: 'Registration fee', amount: '2,000', icon: 'registration' }
+                    ]
+                },
+                { 
+                    name: 'Daniel Gabriel', 
+                    class: 'SS3A', 
+                    date: '07-06-2024 6:30', 
+                    amount: 'NGN 122,000', 
+                    status: 'pending', 
+                    payments: ['T', 'R', 'A'],
+                    orderId: '#67586455',
+                    profileImage: 'profile.png',
+                    paymentBreakdown: [
+                        { type: 'Tuition fee', amount: '100,000', icon: 'tuition' },
+                        { type: 'Registration fee', amount: '2,000', icon: 'registration' },
+                        { type: 'Admission fee', amount: '20,000', icon: 'admission' }
+                    ]
+                },
+                { 
+                    name: 'Harrison Benji', 
+                    class: 'SS1A', 
+                    date: '07-06-2024 6:30', 
+                    amount: 'NGN 100,000', 
+                    status: 'successful', 
+                    payments: ['T'],
+                    orderId: '#67586456',
+                    profileImage: 'profile.png',
+                    paymentBreakdown: [
+                        { type: 'Tuition fee', amount: '100,000', icon: 'tuition' }
+                    ]
+                },
+                { 
+                    name: 'Sarah Johnson', 
+                    class: 'SS2A', 
+                    date: '08-06-2024 9:15', 
+                    amount: 'NGN 22,000', 
+                    status: 'pending', 
+                    payments: ['R', 'A'],
+                    orderId: '#67586457',
+                    profileImage: 'profile.png',
+                    paymentBreakdown: [
+                        { type: 'Registration fee', amount: '2,000', icon: 'registration' },
+                        { type: 'Admission fee', amount: '20,000', icon: 'admission' }
+                    ]
+                },
+                { 
+                    name: 'Michael Adams', 
+                    class: 'SS1B', 
+                    date: '08-06-2024 11:30', 
+                    amount: 'NGN 102,000', 
+                    status: 'unsuccessful', 
+                    payments: ['T', 'R'],
+                    orderId: '#67586458',
+                    profileImage: 'profile.png',
+                    paymentBreakdown: [
+                        { type: 'Tuition fee', amount: '100,000', icon: 'tuition' },
+                        { type: 'Registration fee', amount: '2,000', icon: 'registration' }
+                    ]
+                },
+                { 
+                    name: 'Grace Okafor', 
+                    class: 'SS3B', 
+                    date: '08-06-2024 14:45', 
+                    amount: 'NGN 122,000', 
+                    status: 'successful', 
+                    payments: ['T', 'R', 'A'],
+                    orderId: '#67586459',
+                    profileImage: 'profile.png',
+                    paymentBreakdown: [
+                        { type: 'Tuition fee', amount: '100,000', icon: 'tuition' },
+                        { type: 'Registration fee', amount: '2,000', icon: 'registration' },
+                        { type: 'Admission fee', amount: '20,000', icon: 'admission' }
+                    ]
+                },
+                { 
+                    name: 'Peter Williams', 
+                    class: 'SS2C', 
+                    date: '09-06-2024 8:20', 
+                    amount: 'NGN 20,000', 
+                    status: 'pending', 
+                    payments: ['A'],
+                    orderId: '#67586460',
+                    profileImage: 'profile.png',
+                    paymentBreakdown: [
+                        { type: 'Admission fee', amount: '20,000', icon: 'admission' }
+                    ]
+                }
+            ],
+            successful: [],
+            unsuccessful: [],
+            pending: []
+        };
+
+        // Filter data by status
+        paymentData.successful = paymentData.total.filter(payment => payment.status === 'successful');
+        paymentData.unsuccessful = paymentData.total.filter(payment => payment.status === 'unsuccessful');
+        paymentData.pending = paymentData.total.filter(payment => payment.status === 'pending');
+
+        // Update counts to match the images
+        paymentData.total.length = 207;
+        paymentData.successful.length = 112;
+        paymentData.unsuccessful.length = 86;
+        paymentData.pending.length = 40;
+
+        let currentFilter = 'total';
+        let currentData = paymentData.total;
+
+        function getPaymentIcon(type) {
+            const icons = {
+                'T': '<div class="payment-method-icon tuition-method">T</div>',
+                'R': '<div class="payment-method-icon registration-method">R</div>',
+                'A': '<div class="payment-method-icon admission-method">A</div>'
+            };
+            return icons[type] || '';
+        }
+
+        function getInitials(name) {
+            return name.split(' ').map(word => word[0]).join('');
+        }
+
+        function calculateTotal(paymentBreakdown) {
+            const total = paymentBreakdown.reduce((sum, payment) => {
+                return sum + parseInt(payment.amount.replace(/,/g, ''));
+            }, 0);
+            return total.toLocaleString();
+        }
+
+        function renderTable(data) {
+            const tableBody = document.getElementById('paymentsTable');
+            tableBody.innerHTML = '';
+
+            // Show only the first 10 entries for the demo
+            const displayData = data.slice(0, 10);
+
+            displayData.forEach(payment => {
+                const row = document.createElement('tr');
+                row.className = 'student-row';
+                row.onclick = () => showPaymentDetails(payment);
+
+                const paymentIcons = payment.payments.map(getPaymentIcon).join('');
+                
+                row.innerHTML = `
+                    <td>
+                        <div class="profile-cell">
+                            <img src="${payment.profileImage}" alt="${payment.name}" class="profile-avatar">
+                            <span>${payment.name}</span>
+                        </div>
+                    </td>
+                    <td>${payment.class}</td>
+                    <td>${payment.date}</td>
+                    <td>
+                        <div class="payment-icons">
+                            ${paymentIcons}
+                        </div>
+                        <span class="payment-count">(${payment.payments.length})</span>
+                    </td>
+                    <td>${payment.amount}</td>
+                    <td><span class="status-badge ${payment.status}">${payment.status}</span></td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+
+            // Update pagination info
+            document.getElementById('totalEntries').textContent = data.length;
+            document.getElementById('entriesEnd').textContent = Math.min(10, data.length);
+        }
+
+        function switchFilter(type) {
+            currentFilter = type;
+            currentData = paymentData[type];
+
+            // Update active card
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.remove('active');
+            });
+            document.querySelector(`[data-type="${type}"]`).classList.add('active');
+
+            // Update status label
+            const statusLabel = document.querySelector('.status-label');
+            statusLabel.className = `status-label ${type}`;
+            
+            const labels = {
+                total: 'All Payments',
+                successful: 'Successful',
+                unsuccessful: 'Unsuccessful',
+                pending: 'Pending'
+            };
+            
+            statusLabel.textContent = labels[type];
+
+            // Render table with filtered data
+            renderTable(currentData);
+        }
+
+        function showPaymentDetails(payment) {
+            const modal = document.getElementById('paymentModal');
+            
+            // Update student info
+            const avatar = document.getElementById('modalStudentAvatar');
+            avatar.src = payment.profileImage;
+            avatar.alt = payment.name;
+            
+            document.getElementById('modalStudentName').textContent = payment.name;
+            document.getElementById('modalClass').textContent = payment.class;
+            document.getElementById('modalOrderId').textContent = payment.orderId;
+            document.getElementById('modalDate').textContent = payment.date;
+            
+            // Populate payment details table
+            const detailsTable = document.getElementById('paymentDetailsTable');
+            detailsTable.innerHTML = '';
+            
+            payment.paymentBreakdown.forEach(item => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${payment.name}</td>
+                    <td>${payment.class}</td>
+                    <td>${payment.orderId}</td>
+                    <td>
+                        <div class="payment-info-cell">
+                            <div class="payment-icon ${item.icon}-icon">
+                                <div class="payment-icon-inner"></div>
+                            </div>
+                            <span>${item.type}</span>
+                        </div>
+                    </td>
+                    <td class="amount-cell">NGN ${item.amount}</td>
+                    <td><span class="status-badge ${payment.status}">${payment.status}</span></td>
+                `;
+                
+                detailsTable.appendChild(row);
+            });
+            
+            // Add total row
+            const totalRow = document.createElement('tr');
+            totalRow.className = 'total-row';
+            totalRow.innerHTML = `
+                <td colspan="4"></td>
+                <td class="amount-cell">NGN ${payment.amount}</td>
+                <td><span class="status-badge ${payment.status}">${payment.status}</span></td>
+            `;
+            detailsTable.appendChild(totalRow);
+            
+            modal.style.display = 'block';
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize with total payments
+            renderTable(currentData);
+
+            // Card click handlers
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const type = this.dataset.type;
+                    switchFilter(type);
+                });
+            });
+
+            // Search functionality
+            document.querySelector('.search-input').addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const filteredData = currentData.filter(payment => 
+                    payment.name.toLowerCase().includes(searchTerm)
+                );
+                renderTable(filteredData);
+            });
+
+            // Export functionality
+            document.querySelector('.export-btn').addEventListener('click', function() {
+                alert(`Exporting ${currentFilter} payments data...`);
+            });
+
+            // Modal close functionality
+            document.querySelector('.close').addEventListener('click', function() {
+                document.getElementById('paymentModal').style.display = 'none';
+            });
+
+            window.addEventListener('click', function(e) {
+                const modal = document.getElementById('paymentModal');
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // Pagination functionality
+            document.querySelectorAll('.page-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (!this.classList.contains('disabled')) {
+                        document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+                        if (!isNaN(this.textContent)) {
+                            this.classList.add('active');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
