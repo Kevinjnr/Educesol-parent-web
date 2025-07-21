@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teachers Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary-green: #1AA939;
+            --light-gray-bg: #F8F8F8;
+            --text-dark: #333;
+            --card-blue: #3498db;
+            --card-red: #e74c3c;
+            --card-green: #2ecc71;
+            --table-header-bg: #f2f2f2;
+            --border-color: #e2e8f0;
+            --header-dark-green: #1AA939;
+            --white: #FFFFFF;
+        }
+
+        html {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+        @layer base {
+            body {
+                background-color: var(--light-gray-bg);
+                color: var(--text-dark);
+            }
+            header {
+                background-color: var(--header-dark-green);
+                color: var(--white);
+            }
+        }
+
+        .header-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-logo {
+            width: 80px;
+        }
+        .header-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        .header-dropdown {
+            position: relative;
+        }
+        .header-menu-icon {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+        }
+        .dropdown-content {
+            position: absolute;
+            top: 36px;
+            left: 0;
+            background-color: white;
+            min-width: 120px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            display: none;
+            z-index: 10;
+        }
+        .header-dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-item {
+            display: block;
+            padding: 8px 12px;
+            color: #4a5568;
+            font-size: 0.875rem;
+            text-decoration: none;
+        }
+        .dropdown-item:hover {
+            background-color: #f7fafc;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header-search-input {
+            height: 32px;
+            padding: 0 12px;
+            border-radius: 6px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 0.875rem;
+            outline: none;
+        }
+        .header-search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .header-icon {
+            width: 32px;
+            height: 32px;
+        }
+        .header-user-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 9999px;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding: 16px 24px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        .nav-breadcrumbs {
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            color: #4a5568;
+            font-weight: 700;
+        }
+        .nav-breadcrumbs span {
+            margin: 0 8px;
+            color: #a0aec0;
+        }
+        .nav-term-btn {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 2rem;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .summary-card.students {
+            background-color: #ffe0b2;
+            color: #e65100;
+        }
+        .summary-card.teachers {
+            background-color: #bbdefb;
+            color: #1565c0;
+        }
+        .summary-card.staff {
+            background-color: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .summary-card-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 0.75rem;
+        }
+
+        .summary-card-count {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .summary-card-label {
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .teachers-section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .teachers-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .teachers-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .add-new-btn {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .add-new-btn img {
+            width: 20px;
+            height: 20px;
+            filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(287deg) brightness(100%) contrast(100%);
+        }
+
+        .table-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .entries-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .entries-control label {
+            font-size: 0.875rem;
+            color: #718096;
+        }
+
+        .entries-control select {
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            outline: none;
+        }
+
+        .search-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-control input {
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.875rem;
+            outline: none;
+        }
+
+        .search-control button {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+        }
+
+        .teachers-table-container {
+            overflow-x: auto;
+        }
+
+        .teachers-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .teachers-table th,
+        .teachers-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .teachers-table th {
+            background-color: var(--table-header-bg);
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #4a5568;
+            text-transform: uppercase;
+        }
+
+        .teachers-table td {
+            font-size: 0.875rem;
+            color: #4a5568;
+        }
+
+        .teachers-table tbody tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+
+        .teacher-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 9999px;
+            object-fit: cover;
+        }
+
+        .action-btn {
+            background-color: transparent; 
+            color: white;
+            padding: 0.4rem;
+            border-radius: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .action-btn:hover {
+            opacity: 0.8;
+        }
+        .action-btn img {
+            width: 16px;
+            height: 16px;
+        }
+
+        .pagination-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .pagination-text {
+            font-size: 0.875rem;
+            color: #718096;
+        }
+
+        .pagination-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .pagination-btn {
+            background-color: #e2e8f0;
+            color: #4a5568;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .pagination-btn:hover {
+            background-color: #cbd5e0;
+        }
+
+        .pagination-btn.active {
+            background-color: var(--primary-green);
+            color: white;
+        }
+
+        .subject-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .subject-tab {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            background-color: #e2e8f0;
+            color: #4a5568;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border-right: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .subject-tab:last-child {
+            border-right: none;
+        }
+
+        .subject-tab.active {
+            background-color: var(--primary-green);
+            color: white;
+        }
+
+        .subject-tab:hover:not(.active) {
+            background-color: #cbd5e0;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header class="header-main">
+        <div class="header-left">
+            <img src="./Logo---white 1.png" class="header-logo" alt="Educesol Logo">
+            <h1 class="header-title">Educesol</h1>
+            <div class="header-dropdown group">
+                <img src="./More.png" class="header-menu-icon" alt="Menu Icon">
+                <div class="dropdown-content">
+                    <a href="#" class="dropdown-item">Profile</a>
+                    <a href="#" class="dropdown-item">Settings</a>
+                    <a href="#" class="dropdown-item">Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <input type="text" placeholder="Search" class="header-search-input">
+            <img src="./4.png" alt="Notification Icon" class="header-icon">
+            <img src="./44 2.png" alt="User" class="header-user-icon">
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="nav-bar">
+            <div class="nav-breadcrumbs">
+                <h1 class="section-title !mb-0 !mt-0">TEACHERS</h1>
+            </div>
+                <button class="add-new-btn" onclick="window.location.href='add_teacher_profile.html'">
+                    <img src="./square_14034302 1.png" alt="Add Icon">
+                        Add Teachers
+                </button>
+            </div>
+
+        <div class="subject-tabs">
+            <div class="subject-tab active" data-tab="science">Science</div>
+            <div class="subject-tab" data-tab="art">Art</div>
+            <div class="subject-tab" data-tab="commercial">Commercial</div>
+        </div>
+
+        <div id="science-content" class="tab-content active teachers-section">
+            <div class="table-controls">
+                <div class="entries-control">
+                    <label for="show-entries-science">Show</label>
+                    <select id="show-entries-science">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
+                    <span>Entries</span>
+                </div>
+                <div class="search-control">
+                    <label for="search-input-science">Search:</label>
+                    <input type="text" id="search-input-science">
+                    <button>Q</button>
+                </div>
+            </div>
+
+            <div class="teachers-table-container">
+                <table class="teachers-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Photo</th>
+                            <th>About</th>
+                            <th>Class</th>
+                            <th>Subject</th>
+                            <th style="text-align: center;">Chat</th>
+                            <th style="text-align: center;">Edit Profile</th>
+                            <th style="text-align: center;">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Deo</td>
+                            <td><img src="https://placehold.co/32x32/E0F2F7/333333?text=JD" alt="Avatar" class="teacher-avatar"></td>
+                            <td>View Profile</td>
+                            <td>SS3A</td>
+                            <td>Computer Science</td>
+                            <td>
+                                <button class="action-btn chat">
+                                    <img src="./chart.png" alt="Chat Icon">
+                                </button>
+                            </td>
+                            <td>
+                                <button class="action-btn edit">
+                                    <img src="./pen.png" alt="Edit Icon">
+                                </button>
+                            </td>
+                            <td>
+                                <button class="action-btn delete">
+                                    <img src="./trash.png" alt="Delete Icon">
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Jenny William</td>
+                            <td><img src="https://placehold.co/32x32/E0F2F7/333333?text=JW" alt="Avatar" class="teacher-avatar"></td>
+                            <td>View Profile</td>
+                            <td>SS2A</td>
+                            <td>Biology</td>
+                            <td>
+                                <button class="action-btn chat">
+                                    <img src="./chart.png" alt="Chat Icon">
+                                </button>
+                            </td>
+                            <td>
+                                <button class="action-btn edit">
+                                    <img src="./pen.png" alt="Edit Icon">
+                                </button>
+                            </td>
+                            <td>
+                                <button class="action-btn delete">
+                                    <img src="./trash.png" alt="Delete Icon">
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lori Moore</td>
+                            <td><img src="https://placehold.co/32x32/E0F2F7/333333?text=LM" alt="Avatar" class="teacher-avatar"></td>
+                            <td>View Profile</td>
+                            <td>SS1C</td>
+                            <td>Chemistry</td>
+                            <td>
+                                <button class="action-btn chat">
+                                    <img src="./chart.png" alt="Chat Icon">
+                                </button>
+                            </td>
+                            <td>
+                                <button class="action-btn edit">
+                                    <img src="./pen.png" alt="Edit Icon">
+                                </button>
+                            </td>
+                            <td>
+                                <button class="action-btn delete">
+                                    <img src="./trash.png" alt="Delete Icon">
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Austin Pena</td>
+                            <td><img src="https://placehold.co/32x32/E0F2F7/333333?text=AP" alt="Avatar" class="teacher-avatar"></td>
+                            <td>View Profile</td>
+                            <td>SS2D</td>
+                            <td>Physics</td>
+                            <td>
+                                <button class="action-btn chat">
+                                    <img src="./chart.png" alt="Chat Icon">
+                                </button>
+                            </td>
+                            <td>
+                                <button class="action-btn edit">
+                                    <img src="./pen.png" alt="Edit Icon">
+                                </button>
+                            </td>
+                            <td>
+                                <button class="action-btn delete">
+                                    <img src="./trash.png" alt="Delete Icon">
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination-controls">
+                <div class="pagination-text">Showing 1 to 10 of 502 entries</div>
+                <div class="pagination-buttons">
+                    <button class="pagination-btn">Previous</button>
+                    <button class="pagination-btn">1</button>
+                    <button class="pagination-btn">2</button>
+                    <button class="pagination-btn">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="art-content" class="tab-content teachers-section">
+            <div class="table-controls">
+                <div class="entries-control">
+                    <label for="show-entries-art">Show</label>
+                    <select id="show-entries-art">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
+                    <span>Entries</span>
+                </div>
+                <div class="search-control">
+                    <label for="search-input-art">Search:</label>
+                    <input type="text" id="search-input-art">
+                    <button>Q</button>
+                </div>
+            </div>
+
+            <div class="teachers-table-container">
+                <table class="teachers-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Photo</th>
+                            <th>About</th>
+                            <th>Class</th>
+                            <th>Subject</th>
+                            <th style="text-align: center;">Chat</th>
+                            <th style="text-align: center;">Edit Profile</th>
+                            <th style="text-align: center;">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Emily White</td>
+                            <td><img src="https://placehold.co/32x32/E0F2F7/333333?text=EW" alt="Avatar" class="teacher-avatar"></td>
+                            <td>View Profile</td>
+                            <td>SS1A</td>
+                            <td>Fine Arts</td>
+                            <td>
+                                <button class="action-btn chat">
+                                    <img src="./chart.png" alt="Chat Icon">
+                                </button>
+                            </td>
+                            <td>
+                                <button class="action-btn edit">
+                                    <img src="./pen.png" alt="Edit Icon">
+                                </button>
+                            </td>
+                            <td>
+                                <button class="action-btn delete">
+                                    <img src="./trash.png" alt="Delete Icon">
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination-controls">
+                <div class="pagination-text">Showing 1 to 10 of XX entries (Art)</div>
+                <div class="pagination-buttons">
+                    <button class="pagination-btn">Previous</button>
+                    <button class="pagination-btn">1</button>
+                    <button class="pagination-btn">2</button>
+                    <button class="pagination-btn">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="commercial-content" class="tab-content teachers-section">
+            <div class="table-controls">
+                <div class="entries-control">
+                    <label for="show-entries-commercial">Show</label>
+                    <select id="show-entries-commercial">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
+                    <span>Entries</span>
+                </div>
+                <div class="search-control">
+                    <label for="search-input-commercial">Search:</label>
+                    <input type="text" id="search-input-commercial">
+                    <button>Q</button>
+                </div>
+            </div>
+
+            <div class="teachers-table-container">
+                <table class="teachers-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Photo</th>
+                            <th>About</th>
+                            <th>Class</th>
+                            <th>Subject</th>
+                            <th style="text-align: center;">Chat</th>
+                            <th style="text-align: center;">Edit Profile</th>
+                            <th style="text-align: center;">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>David Lee</td>
+                            <td><img src="https://placehold.co/32x32/E0F2F7/333333?text=DL" alt="Avatar" class="teacher-avatar"></td>
+                            <td>View Profile</td>
+                            <td>SS3B</td>
+                            <td>Financial Accounting</td>
+                            <td>
+                                <button class="action-btn chat">
+                                    <img src="./chart.png" alt="Chat Icon">
+                                </button>
+                            </td>
+                            <td>
+                                <button class="action-btn edit">
+                                    <img src="./pen.png" alt="Edit Icon">
+                                </button>
+                            </td>
+                            <td>
+                                <button class="action-btn delete">
+                                    <img src="./trash.png" alt="Delete Icon">
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination-controls">
+                <div class="pagination-text">Showing 1 to 10 of XX entries (Commercial)</div>
+                <div class="pagination-buttons">
+                    <button class="pagination-btn">Previous</button>
+                    <button class="pagination-btn">1</button>
+                    <button class="pagination-btn">2</button>
+                    <button class="pagination-btn">Next</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.subject-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(item => item.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    tab.classList.add('active');
+
+                    const targetTabId = tab.dataset.tab + '-content';
+                    document.getElementById(targetTabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

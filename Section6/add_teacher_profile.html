@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Teacher Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary-green: #1AA939;
+            --light-gray-bg: #F8F8F8;
+            --text-dark: #333;
+            --card-blue: #3498db;
+            --card-red: #e74c3c;
+            --card-green: #2ecc71;
+            --table-header-bg: #f2f2f2;
+            --border-color: #e2e8f0;
+            --header-dark-green: #1AA939;
+            --white: #FFFFFF;
+        }
+
+        html {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+        @layer base {
+            body {
+                background-color: var(--light-gray-bg);
+                color: var(--text-dark);
+            }
+            header {
+                background-color: var(--header-dark-green);
+                color: var(--white);
+            }
+        }
+
+        .header-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-logo {
+            width: 80px;
+        }
+        .header-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        .header-dropdown {
+            position: relative;
+        }
+        .header-menu-icon {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+        }
+        .dropdown-content {
+            position: absolute;
+            top: 36px;
+            left: 0;
+            background-color: white;
+            min-width: 120px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            display: none;
+            z-index: 10;
+        }
+        .header-dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-item {
+            display: block;
+            padding: 8px 12px;
+            color: #4a5568;
+            font-size: 0.875rem;
+            text-decoration: none;
+        }
+        .dropdown-item:hover {
+            background-color: #f7fafc;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header-search-input {
+            height: 32px;
+            padding: 0 12px;
+            border-radius: 6px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 0.875rem;
+            outline: none;
+        }
+        .header-search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .header-icon {
+            width: 32px;
+            height: 32px;
+        }
+        .header-user-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 9999px;
+        }
+
+        .container {
+            max-width: 832px; /* Set max-width as requested */
+            margin: 0 auto;
+            padding: 2rem; /* Adjusted padding to help with height */
+        }
+
+        .form-section {
+            background-color: white;
+            padding: 2.5rem 2rem; /* Increased vertical padding to increase height */
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-height: 800px; /* Ensure minimum height for content */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Distribute space vertically */
+        }
+
+        .form-title {
+            font-size: 1.5rem; /* Adjusted font size */
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 2rem; /* Adjusted margin */
+        }
+
+        .profile-picture-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem; /* Adjusted gap */
+            margin-bottom: 2rem; /* Adjusted margin */
+        }
+
+        .profile-picture-circle {
+            width: 80px; /* Reverted size */
+            height: 80px; /* Reverted size */
+            border-radius: 9999px;
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-picture-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 9999px;
+        }
+
+        .profile-picture-add-icon {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: var(--primary-green);
+            border-radius: 9999px;
+            padding: 0.25rem; /* Reverted padding */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .profile-picture-add-icon img {
+            width: 20px; /* Reverted size */
+            height: 20px; /* Reverted size */
+            filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(287deg) brightness(100%) contrast(100%);
+        }
+
+        .form-field {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem; /* Adjusted margin */
+        }
+
+        .form-field label {
+            width: 150px; /* Reverted width for labels */
+            font-size: 1rem; /* Reverted font size */
+            color: var(--text-dark);
+            font-weight: 500;
+            text-align: left;
+            padding-right: 1rem; /* Reverted padding */
+        }
+
+        .form-field input[type="text"] {
+            flex-grow: 1;
+            padding: 0.75rem 1rem; /* Reverted padding */
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 1rem; /* Reverted font size */
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-field input[type="text"]:focus {
+            border-color: var(--primary-green);
+        }
+
+        .file-upload-section {
+            display: flex;
+            align-items: center;
+            margin-top: 2rem; /* Adjusted margin */
+        }
+
+        .file-upload-label {
+            width: 150px; /* Reverted width for labels */
+            font-size: 1rem; /* Reverted font size */
+            color: var(--text-dark);
+            font-weight: 500;
+            text-align: left;
+            padding-right: 1rem; /* Reverted padding */
+        }
+
+        .file-upload-box {
+            flex-grow: 1;
+            border: 1px dashed var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1rem; /* Reverted padding */
+            display: flex;
+            align-items: center;
+            gap: 1rem; /* Reverted gap */
+            cursor: pointer;
+            background-color: #f7fafc;
+        }
+
+        .file-upload-box img {
+            width: 32px; /* Reverted size */
+            height: 32px; /* Reverted size */
+        }
+
+        .file-upload-box span {
+            color: #4a5568;
+            font-size: 0.9rem; /* Reverted font size */
+        }
+
+        .save-button-container {
+            text-align: right;
+            margin-top: auto; /* Push to bottom */
+            padding-top: 2rem; /* Add some space above the button */
+        }
+
+        .save-button {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 0.75rem 2rem; /* Reverted padding */
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .save-button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <header class="header-main">
+        <div class="header-left">
+            <img src="./Logo---white 1.png" class="header-logo" alt="Educesol Logo">
+            <h1 class="header-title">Educesol</h1>
+            <div class="header-dropdown group">
+                <img src="./More.png" class="header-menu-icon" alt="Menu Icon">
+                <div class="dropdown-content">
+                    <a href="#" class="dropdown-item">Profile</a>
+                    <a href="#" class="dropdown-item">Settings</a>
+                    <a href="#" class="dropdown-item">Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <input type="text" placeholder="Search" class="header-search-input">
+            <img src="./4.png" alt="Notification Icon" class="header-icon">
+            <img src="./44 2.png" alt="User" class="header-user-icon">
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="form-section">
+            <h2 class="form-title">ADD TEACHER PROFILE INFORMATION</h2>
+
+            <div class="profile-picture-section">
+                <div class="profile-picture-circle">
+                    <img src="./profile.png" alt="Profile Picture Placeholder">
+                    <div class="profile-picture-add-icon">
+                        <img src="./square_14034302 1.png" alt="Add Icon">
+                    </div>
+                </div>
+                <span>Add profile Picture</span>
+            </div>
+
+            <div class="form-field">
+                <label for="bio">Bio</label>
+                <input type="text" id="bio" name="bio">
+            </div>
+
+            <div class="form-field">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" name="fullName">
+            </div>
+
+            <div class="form-field">
+                <label for="department">Department</label>
+                <input type="text" id="department" name="department">
+            </div>
+
+            <div class="form-field">
+                <label for="class">Class</label>
+                <input type="text" id="class" name="class">
+            </div>
+
+            <div class="form-field">
+                <label for="subjectCase">Subject Case</label>
+                <input type="text" id="subjectCase" name="subjectCase">
+            </div>
+
+            <div class="form-field">
+                <label for="extraPosition">Extra Position</label>
+                <input type="text" id="extraPosition" name="extraPosition">
+            </div>
+
+            <div class="form-field">
+                <label for="degree">Degree</label>
+                <input type="text" id="degree" name="degree">
+            </div>
+
+            <div class="form-field">
+                <label for="phoneNumber">Phone number</label>
+                <input type="text" id="phoneNumber" name="phoneNumber">
+            </div>
+
+            <div class="form-field">
+                <label for="degree2">Degree</label>
+                <input type="text" id="degree2" name="degree2">
+            </div>
+
+            <div class="file-upload-section">
+                <label for="portfolio" class="file-upload-label">Portfolio</label>
+                <div class="file-upload-box">
+                    <img src="https://placehold.co/32x32/FF6347/FFFFFF?text=PDF" alt="PDF Icon">
+                    <span>Add file</span>
+                    <input type="file" id="portfolio" name="portfolio" class="hidden">
+                </div>
+            </div>
+
+            <div class="save-button-container">
+                <button class="save-button">SAVE</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fileUploadBox = document.querySelector('.file-upload-box');
+            const portfolioInput = document.getElementById('portfolio');
+
+            if (fileUploadBox && portfolioInput) {
+                fileUploadBox.addEventListener('click', () => {
+                    portfolioInput.click();
+                });
+
+                portfolioInput.addEventListener('change', () => {
+                    if (portfolioInput.files.length > 0) {
+                        fileUploadBox.querySelector('span').textContent = portfolioInput.files[0].name;
+                    } else {
+                        fileUploadBox.querySelector('span').textContent = 'Add file';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

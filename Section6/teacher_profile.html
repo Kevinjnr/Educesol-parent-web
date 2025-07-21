@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary-green: #1AA939;
+            --light-gray-bg: #F8F8F8;
+            --text-dark: #333;
+            --card-blue: #3498db;
+            --card-red: #e74c3c;
+            --card-green: #2ecc71;
+            --table-header-bg: #f2f2f2;
+            --border-color: #e2e8f0;
+            --header-dark-green: #1AA939;
+            --white: #FFFFFF;
+        }
+
+        html {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+        @layer base {
+            body {
+                background-color: var(--light-gray-bg);
+                color: var(--text-dark);
+            }
+            header {
+                background-color: var(--header-dark-green);
+                color: var(--white);
+            }
+        }
+
+        .header-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-logo {
+            width: 80px;
+        }
+        .header-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        .header-dropdown {
+            position: relative;
+        }
+        .header-menu-icon {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+        }
+        .dropdown-content {
+            position: absolute;
+            top: 36px;
+            left: 0;
+            background-color: white;
+            min-width: 120px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            display: none;
+            z-index: 10;
+        }
+        .header-dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-item {
+            display: block;
+            padding: 8px 12px;
+            color: #4a5568;
+            font-size: 0.875rem;
+            text-decoration: none;
+        }
+        .dropdown-item:hover {
+            background-color: #f7fafc;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header-search-input {
+            height: 32px;
+            padding: 0 12px;
+            border-radius: 6px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 0.875rem;
+            outline: none;
+        }
+        .header-search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .header-icon {
+            width: 32px;
+            height: 32px;
+        }
+        .header-user-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 9999px;
+        }
+
+        .container {
+            max-width: 683px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .profile-section {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 677px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+            align-items: center; /* Center content horizontally */
+            text-align: center; /* Center text within the section */
+        }
+
+        .profile-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 1.5rem;
+            text-align: center; /* Ensure title is centered */
+        }
+
+        .teacher-info-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f7fafc;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            width: 100%; /* Ensure it takes full width within its container */
+            max-width: 500px; /* Limit width for better appearance */
+            margin-left: auto; /* Center the card */
+            margin-right: auto; /* Center the card */
+        }
+
+        .teacher-avatar-large {
+            width: 90px;
+            height: 90px;
+            border-radius: 9999px;
+            object-fit: cover;
+        }
+
+        .teacher-details {
+            flex-grow: 1;
+            text-align: left; /* Keep text left-aligned within details */
+        }
+
+        .teacher-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .teacher-class {
+            font-size: 1rem;
+            color: #718096;
+            margin-top: 0.2rem;
+        }
+
+        .chat-icon-container {
+            background-color: var(--primary-green);
+            border-radius: 9999px;
+            padding: 0.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .chat-icon-container img {
+            width: 20px;
+            height: 20px;
+            filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(287deg) brightness(100%) contrast(100%);
+        }
+
+        .teacher-bio {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            max-width: 600px; /* Limit width for better readability */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .profile-information-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+            text-align: center; /* Center the title */
+        }
+
+        .info-table {
+            width: 100%;
+            max-width: 500px; /* Limit table width to match the image */
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            margin-left: auto; /* Center the table */
+            margin-right: auto; /* Center the table */
+        }
+
+        .info-table tr {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .info-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .info-table td {
+            padding: 0.4rem 1rem;
+            font-size: 0.9rem;
+            color: #4a5568;
+            text-align: left; /* Keep text left-aligned within table cells */
+        }
+
+        .info-table td:first-child {
+            font-weight: 600;
+            width: 160px;
+            color: var(--text-dark);
+        }
+
+        .portfolio-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #3498db;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .portfolio-link img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .edit-button-container {
+            text-align: center;
+            margin-top: 1.5rem;
+            /* No longer needs to push to bottom, as it's now part of the content flow */
+        }
+
+        .edit-button {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.2s;
+        }
+
+        .edit-button:hover {
+            opacity: 0.9;
+        }
+
+        .edit-button img {
+            width: 18px;
+            height: 18px;
+            filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(287deg) brightness(100%) contrast(100%);
+        }
+    </style>
+</head>
+<body>
+    <header class="header-main">
+        <div class="header-left">
+            <img src="./Logo---white 1.png" class="header-logo" alt="Educesol Logo">
+            <h1 class="header-title">Educesol</h1>
+            <div class="header-dropdown group">
+                <img src="./More.png" class="header-menu-icon" alt="Menu Icon">
+                <div class="dropdown-content">
+                    <a href="#" class="dropdown-item">Profile</a>
+                    <a href="#" class="dropdown-item">Settings</a>
+                    <a href="#" class="dropdown-item">Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <input type="text" placeholder="Search" class="header-search-input">
+            <img src="./4.png" alt="Notification Icon" class="header-icon">
+            <img src="./44 2.png" alt="User" class="header-user-icon">
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="profile-section">
+            <h2 class="profile-title">TEACHER PROFILE</h2>
+
+            <div class="teacher-info-card">
+                <img src="./teachersprofile.png" alt="Teacher Avatar" class="teacher-avatar-large">
+                <div class="teacher-details">
+                    <div class="teacher-name">Mr Uduak Benard</div>
+                    <div class="teacher-class">SS3A</div>
+                </div>
+                <div class="chat-icon-container">
+                    <img src="./chart.png" alt="Chat Icon">
+                </div>
+            </div>
+
+            <p class="teacher-bio">
+                Hi, I'm Mr. Uduak, I'm passionate about technology and here to make
+                learning fun and easy for everyone. Welcome to an exciting journey in
+                the digital world!
+            </p>
+
+            <h3 class="profile-information-title">PROFILE INFORMATION</h3>
+            <table class="info-table">
+                <tr>
+                    <td>Full Name</td>
+                    <td>Mr Uduak Benard</td>
+                </tr>
+                <tr>
+                    <td>Department</td>
+                    <td>Science</td>
+                </tr>
+                <tr>
+                    <td>Class</td>
+                    <td>SS3A</td>
+                </tr>
+                <tr>
+                    <td>Subject Case</td>
+                    <td>Computer Science</td>
+                </tr>
+                <tr>
+                    <td>Extra Position</td>
+                    <td>School Sport Director</td>
+                </tr>
+                <tr>
+                    <td>Degree</td>
+                    <td>Bsc in Computer Science</td>
+                </tr>
+                <tr>
+                    <td>Phone number</td>
+                    <td>09134568739</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>Uduben@gmail.com</td>
+                </tr>
+                <tr>
+                    <td>Portfolio</td>
+                    <td>
+                        <a href="#" class="portfolio-link">
+                            <img src="https://placehold.co/32x32/FF6347/FFFFFF?text=PDF" alt="PDF Icon">
+                            Open folder
+                        </a>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="edit-button-container">
+                <button class="edit-button">
+                    <img src="./pen.png" alt="Edit Icon">
+                    Edit information
+                </button>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
