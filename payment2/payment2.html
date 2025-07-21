@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Educesol Payment Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: #f9f9f9;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1faa38;
+      padding: 15px 30px;
+      color: white;
+    }
+
+    .navbar .logo {
+      font-size: 35px;
+      font-weight: bold;
+    }
+
+    .navbar input[type="text"] {
+      width: 15%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background:#51c366;
+    }
+
+    .icons span {
+      margin-left: 15px;
+      cursor: pointer;
+    }
+
+    input[type="text"] {
+      width: 50%;
+      margin-left: 100px;
+      padding: 8px;
+      border-color: #cbc3c3;
+      border-radius: 50px;
+    }
+
+    .datetime {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+}
+
+.text {
+  font-weight: 800;
+  font-size: 20px;
+  color: #1db12e;
+  margin-left: 300px;
+}
+
+.date {
+  font-weight: 600;
+  color: #3f3f3f;
+}
+
+.time {
+  font-weight: 500;
+  color: #555;
+  font-size: 13px;
+}
+
+    
+    
+
+    .summary {
+      display: flex;
+      gap: 40px;
+      padding: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      flex: 1;
+      min-width: 100px;
+      max-width: 270px;
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .card h2 {
+      color: white;  
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .card p {
+      color: #ffffff;
+      margin: 5px 0 0 0;
+    }
+
+    .orange { background: #ffc560; }
+    .blue { background: #7450e2; }
+    .green { background: #55da69; }
+    .purple { background: #c0baff; }
+
+    .section-title {
+      margin-left: 30px;
+      color: #2e7d32;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+    }
+
+    th {
+      background: #e3f2fd;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f1f1f1;
+    }
+
+    td img {
+      width: 30px;
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    .status {
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .status.success { background: #4caf50; }
+    .status.unsuccessful { background: #f44336; }
+    .status.pending { background: #ff9800; }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      gap: 10px;
+    }
+
+    .pagination button {
+        font-weight: bolder;
+      padding: 10px 15px;
+      border: none;
+      background: #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #1faa59;
+    }
+
+    .pagination button.active {
+      background: #1faa59;
+      color: white;
+      font-weight: bold;
+    }
+
+    .pagination button.next {
+      background: #1faa59;
+      color: white;
+      font-weight: bold;
+    }
+
+    .pagination button.passive {
+        background: #a9ceb8;
+      color: white;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo"><img src="Logo---white 1.png">Educesol</div>
+    <div><img src="More.png"></div>
+    <input type="text" placeholder="Search">
+    <div class="icons">
+      <span class="icon-bell"><img src="4.png"></span>
+      <span class="icon-user"><img src="44 2.png"></span>
+    </div>
+  </div>
+
+  <br><input type="text" placeholder="Search payments">
+  <td class="datetime">
+    <span class="text">Today</span>
+    <span class="date">5th June 2024</span>
+    <span class="time">6:30am</span>
+  </td>
+
+  <div class="summary">
+    <div class="card orange"> <h2><img src="6 1.png">207</h2><p>Total Payments</p> </div>
+    <div class="card blue"> <h2><img src="4(2) 1.png">112</h2><p>Successful Payments</p> </div>
+    <div class="card green"> <h2><img src="Group 333.png">86</h2><p>Unsuccessful Payments</p> </div>
+    <div class="card purple"> <h2><img src="5 1.png">40</h2><p>Pending Payments</p> </div>
+  </div>
+
+  <h2 class="section-title">ALL PAYMENT</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Class</th>
+        <th>Date / Time</th>
+        <th>Payment details</th>
+        <th>Amount</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><img src="profile avatar.png">Anabella George</td>
+        <td>SS3A</td>
+        <td>07-06-2024 6:30</td>
+        <td><img src="Frame 5.png"><img src="image 7.png"><img src="Frame 7.png">(3)</td>
+        <td>NGN 122,000</td>
+        <td><span class="status success">SUCCESSFUL</span></td>
+      </tr>
+      <tr>
+        <td><img src="profile avatar.png">Amaka Chukuwka</td>
+        <td>SS3A</td>
+        <td>07-06-2024 6:30</td>
+        <td><img src="Frame 5.png"><img src="image 7.png">(2)</td>
+        <td>NGN 122,000</td>
+        <td><span class="status unsuccessful">UNSUCCESSFUL</span></td>
+      </tr>
+      <tr>
+        <td><img src="profile avatar.png">Daniel Gabriel</td>
+        <td>SS3A</td>
+        <td>07-06-2024 6:30</td>
+        <td><img src="Frame 5.png"><img src="image 7.png"><img src="Frame 7.png">(3)</td>
+        <td>NGN 122,000</td>
+        <td><span class="status pending">PENDING</span></td>
+      </tr>
+      <tr>
+        <td><img src="profile avatar.png">Harrison Benji</td>
+        <td>SS3A</td>
+        <td>07-06-2024 6:30</td>
+        <td><img src="Frame 5.png">(1)</td>
+        <td>NGN 122,000</td>
+        <td><span class="status success">SUCCESSFUL</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button>Previous</button>
+    <button class="active">1</button>
+    <button class="passive">2</button>
+    <button class="next">Next</button>
+  </div>
+</body>
+</html>
